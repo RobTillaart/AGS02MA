@@ -59,6 +59,7 @@ public:
 private:
   bool     _readRegister(uint8_t reg);
   bool     _writeRegister(uint8_t reg);
+  uint8_t  _CRC8(uint8_t * buf, uint8_t size);
 
   uint32_t _startTime  = 0;
   uint32_t _lastRead   = 0;
