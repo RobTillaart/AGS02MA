@@ -22,8 +22,6 @@
 #define AGS02MA_I2C_CLOCK           25000
 
 
-
-
 class AGS02MA
 {
 public:
@@ -54,6 +52,7 @@ public:
   bool     zeroCalibration();
 
   int      lastError();
+  uint8_t  lastStatus() { return _status; };
 
 
 private:
@@ -64,6 +63,8 @@ private:
   uint32_t _lastRead   = 0;
   uint8_t  _address    = 0;
   uint8_t  _mode       = 255;
+  uint8_t  _status     = 0;
+
   uint8_t  _buffer[5];
 
   int      _error = AGS02MA_OK;

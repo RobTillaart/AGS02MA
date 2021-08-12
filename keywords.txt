@@ -18,7 +18,7 @@ getAddress	KEYWORD2
 getSensorVersion	KEYWORD2
 
 setPPBMode	KEYWORD2
-setUGMode	KEYWORD2
+setUGM3Mode	KEYWORD2
 getMode	KEYWORD2
 
 

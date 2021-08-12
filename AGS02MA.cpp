@@ -121,12 +121,11 @@ uint32_t AGS02MA::readPPB()
   _lastRead = millis();
   if (_readRegister(AGS02MA_DATA))
   {
-    val = _buffer[1] * 65536UL;
+    _status = _buffer[0];
+    val =  _buffer[1] * 65536UL;
     val += _buffer[2] * 256;
     val += _buffer[3];
-    // TODO STATUS
     // TODO CRC
-    // TODO status _readRegister == false
   }
   return val;
 }
@@ -138,12 +137,12 @@ uint32_t AGS02MA::readUGM3()
   _lastRead = millis();
   if (_readRegister(AGS02MA_DATA))
   {
+    _status = _buffer[0];
     val = _buffer[1] * 65536UL;
     val += _buffer[2] * 256;
     val += _buffer[3];
     // TODO STATUS
     // TODO CRC
-    // TODO status _readRegister == false
   }
   return val;
 }
