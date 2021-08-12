@@ -81,7 +81,7 @@ uint8_t AGS02MA::getSensorVersion()
   if (_readRegister(AGS02MA_VERSION))
   {
     version = _buffer[3];
-    if (_CRC8(_buffer, 4) != _buffer[4])
+    if (_CRC8(_buffer, 5) != 0)
     {
       _error = AGS02MA_CRC_ERROR;
     }
@@ -132,7 +132,7 @@ uint32_t AGS02MA::readPPB()
     val =  _buffer[1] * 65536UL;
     val += _buffer[2] * 256;
     val += _buffer[3];
-    if (_CRC8(_buffer, 4) != _buffer[4])
+    if (_CRC8(_buffer, 5) != 0)
     {
       _error = AGS02MA_CRC_ERROR;
     }
@@ -151,7 +151,7 @@ uint32_t AGS02MA::readUGM3()
     val = _buffer[1] * 65536UL;
     val += _buffer[2] * 256;
     val += _buffer[3];
-    if (_CRC8(_buffer, 4) != _buffer[4])
+    if (_CRC8(_buffer, 5) != 0)
     {
       _error = AGS02MA_CRC_ERROR;
     }
