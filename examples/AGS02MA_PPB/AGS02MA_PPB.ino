@@ -29,10 +29,17 @@ void setup()
   Serial.println(AGS02MA_LIB_VERSION);
   Serial.println();
 
-
   bool b = AGS.begin();
   Serial.print("BEGIN:\t");
   Serial.println(b);
+
+  Serial.println("\nWarming up (120 seconds = 24 dots)");
+  while (AGS.isHeated() == false)
+  {
+    delay(5000);
+    Serial.print(".");
+  }
+  Serial.println();
 
   b = AGS.setPPBMode();
   uint8_t m = AGS.getMode();

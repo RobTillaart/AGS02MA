@@ -63,10 +63,10 @@ bool AGS02MA::isConnected()
 
 bool AGS02MA::setAddress(const uint8_t deviceAddress)
 {
-  if (address < 10 or address > 119) return false;
-  _buffer[2] = _buffer[0] = address;
-  _buffer[3] = _buffer[1] = 0xFF ^ address;
-  _buffer[4] = _CRC(_buffer, 4);
+  if (deviceAddress < 10 or deviceAddress > 119) return false;
+  _buffer[2] = _buffer[0] = deviceAddress;
+  _buffer[3] = _buffer[1] = 0xFF ^ deviceAddress;
+  _buffer[4] = _CRC8(_buffer, 4);
   if (_writeRegister(AGS02MA_SLAVE_ADDRESS))
   {
     _address = deviceAddress;
