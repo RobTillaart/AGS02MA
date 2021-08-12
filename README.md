@@ -1,4 +1,6 @@
-
+[![Arduino CI](https://github.com/RobTillaart/AGS02MA/workflows/Arduino%20CI/badge.svg)](https://github.com/marketplace/actions/arduino_ci)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/RobTillaart/AGS02MA/blob/master/LICENSE)
+[![GitHub release](https://img.shields.io/github/release/RobTillaart/AGS02MA.svg?maxAge=3600)](https://github.com/RobTillaart/AGS02MA/releases)
 
 # AGS02MA
 
@@ -40,8 +42,8 @@ Otherwise the device is not ready.
 
 WARNING: Take at least 2 seconds between reads.
 
-- ** uint32_t readPPB()** reads PPB from device. 
-- ** uint32_t readUGM3()** reads current value from device. 
+- **uint32_t readPPB()** reads PPB from device. 
+- **uint32_t readUGM3()** reads current value from device. 
 
 
 ### Other
@@ -49,6 +51,7 @@ WARNING: Take at least 2 seconds between reads.
 - **bool zeroCalibration()** to be called after at least 5 minutes in fresh air. 
 See example sketch.
 - **int lastError()** returns last error.
+- **uint8_t lastStatus()** returns status byte from last read.
 
 
 ## Future
@@ -59,5 +62,7 @@ See example sketch.
 - optimize code 
 - buy a sensor
 - elaborate error handling.
+- elaborate unit test.
+
 
 

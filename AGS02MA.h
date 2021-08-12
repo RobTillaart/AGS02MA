@@ -16,12 +16,11 @@
 #define AGS02MA_LIB_VERSION         (F("0.1.0"))
 
 #define AGS02MA_OK                  0
-#define AGS02MA_ERROR               -1
+#define AGS02MA_ERROR               -10
+#define AGS02MA_CRC_ERROR           -11
 
 
 #define AGS02MA_I2C_CLOCK           25000
-
-
 
 
 class AGS02MA
@@ -54,16 +53,22 @@ public:
   bool     zeroCalibration();
 
   int      lastError();
+  uint8_t  lastStatus() { return _status; };
+
+  uint8_t  _CRC8(uint8_t * buf, uint8_t size);
 
 
 private:
   bool     _readRegister(uint8_t reg);
   bool     _writeRegister(uint8_t reg);
+  //uint8_t  _CRC8(uint8_t * buf, uint8_t size);
 
   uint32_t _startTime  = 0;
   uint32_t _lastRead   = 0;
   uint8_t  _address    = 0;
   uint8_t  _mode       = 255;
+  uint8_t  _status     = 0;
+
   uint8_t  _buffer[5];
 
   int      _error = AGS02MA_OK;
