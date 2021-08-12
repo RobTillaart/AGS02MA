@@ -19,7 +19,7 @@ void setup()
   Serial.println(__FILE__);
 
   Wire.begin();
-  Wire.setClock(25000);
+  Wire.setClock(30400);
 #if defined(__AVR__)
   Serial.print("TWBR:\t");
   Serial.println(TWBR);
