@@ -27,7 +27,7 @@ readUGM3	KEYWORD2
 
 zeroCalibration	KEYWORD2
 lastError	KEYWORD2
-
+lastStatus	KEYWORD2
 
 # Constants (	LITERAL1)
 AGS02MA_LIB_VERSION	LITERAL1
