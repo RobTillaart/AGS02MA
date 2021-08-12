@@ -16,7 +16,8 @@
 #define AGS02MA_LIB_VERSION         (F("0.1.0"))
 
 #define AGS02MA_OK                  0
-#define AGS02MA_ERROR               -1
+#define AGS02MA_ERROR               -10
+#define AGS02MA_CRC_ERROR           -11
 
 
 #define AGS02MA_I2C_CLOCK           25000

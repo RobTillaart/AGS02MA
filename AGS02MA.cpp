@@ -77,8 +77,15 @@ bool AGS02MA::setAddress(const uint8_t deviceAddress)
 
 uint8_t AGS02MA::getSensorVersion()
 {
-  _readRegister(AGS02MA_VERSION);
-  uint8_t version = _buffer[3];
+  uint8_t version = 0xFF;
+  if (_readRegister(AGS02MA_VERSION))
+  {
+    version = _buffer[3];
+    if (_CRC8(_buffer, 4) != _buffer[4])
+    {
+      _error = AGS02MA_CRC_ERROR;
+    }
+  }
   return version;
 }
 
@@ -125,7 +132,10 @@ uint32_t AGS02MA::readPPB()
     val =  _buffer[1] * 65536UL;
     val += _buffer[2] * 256;
     val += _buffer[3];
-    // TODO CRC
+    if (_CRC8(_buffer, 4) != _buffer[4])
+    {
+      _error = AGS02MA_CRC_ERROR;
+    }
   }
   return val;
 }
@@ -141,8 +151,10 @@ uint32_t AGS02MA::readUGM3()
     val = _buffer[1] * 65536UL;
     val += _buffer[2] * 256;
     val += _buffer[3];
-    // TODO STATUS
-    // TODO CRC
+    if (_CRC8(_buffer, 4) != _buffer[4])
+    {
+      _error = AGS02MA_CRC_ERROR;
+    }
   }
   return val;
 }
@@ -206,6 +218,22 @@ bool AGS02MA::_writeRegister(uint8_t reg)
   _error = _wire->endTransmission();
   _wire->setClock(400000);
   return (_error == 0);
+}
+
+
+uint8_t AGS02MA::_CRC8(uint8_t * buf, uint8_t size)
+{
+  uint8_t crc = 0xFF;  // start value
+  for (uint8_t b = 0; b < size; b++)
+  {
+    crc ^= buf[b];
+    for (uint8_t i = 0; i < 8; i++)
+    {
+      if (crc & 0x80) crc = (crc << 1) ^ 0x31;
+      else crc = (crc << 1);
+    }
+  }
+  return crc;
 }
 
 
