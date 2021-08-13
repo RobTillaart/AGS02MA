@@ -73,11 +73,11 @@ unittest(test_mode)
 
   assertEqual(255, AGS.getMode());
 
-  assertFalse(AGS.setPPBMode());
+  assertTrue(AGS.setPPBMode());
   assertEqual(0, AGS.getMode());
 
-  assertFalse(AGS.setUGM3Mode());
-  assertEqual(0, AGS.getMode());
+  assertTrue(AGS.setUGM3Mode());
+  assertEqual(1, AGS.getMode());
 }
 
 
