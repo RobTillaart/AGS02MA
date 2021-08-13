@@ -26,6 +26,7 @@ void setup()
   Serial.println();
 
   Wire.begin();
+  Wire.setClock(30400);
 
   bool b = AGS.begin();
   Serial.print("BEGIN:\t");

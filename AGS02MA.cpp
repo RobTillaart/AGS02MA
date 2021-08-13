@@ -53,10 +53,14 @@ bool AGS02MA::begin()
 
 bool AGS02MA::isConnected()
 {
+#if defined (__AVR__)
+  TWBR = 255; 
+#else
   _wire->setClock(AGS02MA_I2C_CLOCK);
+#endif
   _wire->beginTransmission(_address);
   bool rv =  ( _wire->endTransmission() == 0);
-  _wire->setClock(400000);
+  _wire->setClock(_I2CReseSpeed);
   return rv;
 }
 
@@ -186,7 +190,11 @@ int AGS02MA::lastError()
 //
 bool AGS02MA::_readRegister(uint8_t reg)
 {
+#if defined (__AVR__)
+  TWBR = 255; 
+#else
   _wire->setClock(AGS02MA_I2C_CLOCK);
+#endif
   _wire->beginTransmission(_address);
   _wire->write(reg);
   _error = _wire->endTransmission();
@@ -194,21 +202,25 @@ bool AGS02MA::_readRegister(uint8_t reg)
   if (_wire->requestFrom(_address, (uint8_t)5) != 5)
   {
     _error = AGS02MA_ERROR;
-    _wire->setClock(400000);
+    _wire->setClock(_I2CReseSpeed);
     return false;
   }
   for (int i = 0; i < 5; i++)
   {
     _buffer[i] = _wire->read();
   }
-  _wire->setClock(400000);
+  _wire->setClock(_I2CReseSpeed);
   return true;
 }
 
 
 bool AGS02MA::_writeRegister(uint8_t reg)
 {
+#if defined (__AVR__)
+  TWBR = 255; 
+#else
   _wire->setClock(AGS02MA_I2C_CLOCK);
+#endif
   _wire->beginTransmission(_address);
   _wire->write(reg);
   for (int i = 0; i < 5; i++)
@@ -216,7 +228,7 @@ bool AGS02MA::_writeRegister(uint8_t reg)
     _wire->write(_buffer[i]);
   }
   _error = _wire->endTransmission();
-  _wire->setClock(400000);
+  _wire->setClock(_I2CReseSpeed);
   return (_error == 0);
 }
 

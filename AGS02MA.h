@@ -21,6 +21,7 @@
 
 
 #define AGS02MA_I2C_CLOCK           25000
+#define AGS02MA_I2C_RESET           400000
 
 
 class AGS02MA
@@ -33,14 +34,17 @@ public:
 #endif
   bool     begin();
   bool     isConnected();
-  bool     isHeated() { return (millis() - _startTime) > 120000UL; };
 
+  bool     isHeated() { return (millis() - _startTime) > 120000UL; };
   uint32_t lastRead() { return _lastRead; };
 
   bool     setAddress(const uint8_t deviceAddress);
   uint8_t  getAddress() { return _address; };
 
   uint8_t  getSensorVersion();
+  void     setI2CResetSpeed(uint32_t s) { _I2CReseSpeed = s; };
+  uint32_t getI2CResetSpeed() { return _I2CReseSpeed; };
+
 
   bool     setPPBMode();
   bool     setUGM3Mode();
@@ -55,19 +59,17 @@ public:
   int      lastError();
   uint8_t  lastStatus() { return _status; };
 
-  uint8_t  _CRC8(uint8_t * buf, uint8_t size);
-
-
 private:
   bool     _readRegister(uint8_t reg);
   bool     _writeRegister(uint8_t reg);
-  //uint8_t  _CRC8(uint8_t * buf, uint8_t size);
+  uint8_t  _CRC8(uint8_t * buf, uint8_t size);
 
-  uint32_t _startTime  = 0;
-  uint32_t _lastRead   = 0;
-  uint8_t  _address    = 0;
-  uint8_t  _mode       = 255;
-  uint8_t  _status     = 0;
+  uint32_t _I2CReseSpeed  = 100000;
+  uint32_t _startTime     = 0;
+  uint32_t _lastRead      = 0;
+  uint8_t  _address       = 0;
+  uint8_t  _mode          = 255;
+  uint8_t  _status        = 0;
 
   uint8_t  _buffer[5];
 
