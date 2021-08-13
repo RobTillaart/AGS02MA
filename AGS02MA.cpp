@@ -1,8 +1,8 @@
 //
 //    FILE: AGS02MA.cpp
-//  AUTHOR: Rob Tillaart
+//  AUTHOR: Rob Tillaart, Viktor Balint
 //    DATE: 2021-08-12
-// VERSION: 0.1.0
+// VERSION: 0.1.1
 // PURPOSE: Arduino library for AGS02MA TVOC
 //     URL: https://github.com/RobTillaart/AGS02MA
 
@@ -18,12 +18,17 @@
 
 
 
-
 AGS02MA::AGS02MA(const uint8_t deviceAddress, TwoWire *wire)
 {
-  _address    = deviceAddress;
-  _wire       = wire;
-  _error      = AGS02MA_OK;
+  _address       = deviceAddress;
+  _wire          = wire;
+  
+  _I2CResetSpeed = 100000;
+  _startTime     = 0;
+  _lastRead      = 0;
+  _mode          = 255;
+  _status        = AGS02MA_OK;
+  _error         = AGS02MA_OK;
 }
 
 
@@ -60,7 +65,7 @@ bool AGS02MA::isConnected()
 #endif
   _wire->beginTransmission(_address);
   bool rv =  ( _wire->endTransmission() == 0);
-  _wire->setClock(_I2CReseSpeed);
+  _wire->setClock(_I2CResetSpeed);
   return rv;
 }
 
@@ -202,14 +207,14 @@ bool AGS02MA::_readRegister(uint8_t reg)
   if (_wire->requestFrom(_address, (uint8_t)5) != 5)
   {
     _error = AGS02MA_ERROR;
-    _wire->setClock(_I2CReseSpeed);
+    _wire->setClock(_I2CResetSpeed);
     return false;
   }
   for (int i = 0; i < 5; i++)
   {
     _buffer[i] = _wire->read();
   }
-  _wire->setClock(_I2CReseSpeed);
+  _wire->setClock(_I2CResetSpeed);
   return true;
 }
 
@@ -228,7 +233,7 @@ bool AGS02MA::_writeRegister(uint8_t reg)
     _wire->write(_buffer[i]);
   }
   _error = _wire->endTransmission();
-  _wire->setClock(_I2CReseSpeed);
+  _wire->setClock(_I2CResetSpeed);
   return (_error == 0);
 }
 

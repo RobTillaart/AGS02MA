@@ -1,9 +1,9 @@
 #pragma once
 //
 //    FILE: AGS02MA.h
-//  AUTHOR: Rob Tillaart
+//  AUTHOR: Rob Tillaart, Viktor Balint
 //    DATE: 2021-08-12
-// VERSION: 0.1.0
+// VERSION: 0.1.1
 // PURPOSE: Arduino library for AGS02MA TVOC
 //     URL: https://github.com/RobTillaart/AGS02MA
 //
@@ -13,7 +13,7 @@
 #include "Wire.h"
 
 
-#define AGS02MA_LIB_VERSION         (F("0.1.0"))
+#define AGS02MA_LIB_VERSION         (F("0.1.1"))
 
 #define AGS02MA_OK                  0
 #define AGS02MA_ERROR               -10
@@ -21,7 +21,6 @@
 
 
 #define AGS02MA_I2C_CLOCK           25000
-#define AGS02MA_I2C_RESET           400000
 
 
 class AGS02MA
@@ -42,8 +41,8 @@ public:
   uint8_t  getAddress() { return _address; };
 
   uint8_t  getSensorVersion();
-  void     setI2CResetSpeed(uint32_t s) { _I2CReseSpeed = s; };
-  uint32_t getI2CResetSpeed() { return _I2CReseSpeed; };
+  void     setI2CResetSpeed(uint32_t s) { _I2CResetSpeed = s; };
+  uint32_t getI2CResetSpeed() { return _I2CResetSpeed; };
 
 
   bool     setPPBMode();
@@ -64,7 +63,7 @@ private:
   bool     _writeRegister(uint8_t reg);
   uint8_t  _CRC8(uint8_t * buf, uint8_t size);
 
-  uint32_t _I2CReseSpeed  = 100000;
+  uint32_t _I2CResetSpeed = 100000;
   uint32_t _startTime     = 0;
   uint32_t _lastRead      = 0;
   uint8_t  _address       = 0;
