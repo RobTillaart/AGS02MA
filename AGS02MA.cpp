@@ -153,7 +153,7 @@ uint32_t AGS02MA::readPPB()
 
 uint32_t AGS02MA::readUGM3()
 {
-  // TODO identical codewise to PPB, can be merged into one.
+  // TODO identical code wise to PPB, can be merged into one.
   uint32_t val = 0xFFFFFFFF;
   _lastRead = millis();
   if (_readRegister(AGS02MA_DATA))
@@ -205,7 +205,7 @@ bool AGS02MA::_readRegister(uint8_t reg)
   _wire->beginTransmission(_address);
   _wire->write(reg);
   _error = _wire->endTransmission(true);
-
+  delay(30);
   if (_wire->requestFrom(_address, (uint8_t)5) != 5)
   {
     _error = AGS02MA_ERROR;
@@ -216,6 +216,7 @@ bool AGS02MA::_readRegister(uint8_t reg)
   {
     _buffer[i] = _wire->read();
   }
+  delay(30);
   _wire->setClock(_I2CResetSpeed);
   return true;
 }
@@ -235,6 +236,7 @@ bool AGS02MA::_writeRegister(uint8_t reg)
     _wire->write(_buffer[i]);
   }
   _error = _wire->endTransmission(true);
+  delay(30);
   _wire->setClock(_I2CResetSpeed);
   return (_error == 0);
 }
