@@ -24,7 +24,7 @@ void loop()
 {
   delay(3000);
   Wire.requestFrom(26, 5);
-  for int i = 0; i < 5 i++)
+  for ( int i = 0; i < 5; i++)
   {
     uint8_t x = Wire.read();
     Serial.print(x, HEX);
