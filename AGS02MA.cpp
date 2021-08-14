@@ -64,7 +64,7 @@ bool AGS02MA::isConnected()
   _wire->setClock(AGS02MA_I2C_CLOCK);
 #endif
   _wire->beginTransmission(_address);
-  bool rv =  ( _wire->endTransmission() == 0);
+  bool rv = ( _wire->endTransmission(true) == 0);
   _wire->setClock(_I2CResetSpeed);
   return rv;
 }
@@ -89,6 +89,7 @@ uint8_t AGS02MA::getSensorVersion()
   uint8_t version = 0xFF;
   if (_readRegister(AGS02MA_VERSION))
   {
+    // unclear what the other bytes have for information. (if there is any)
     version = _buffer[3];
     if (_CRC8(_buffer, 5) != 0)
     {
@@ -152,6 +153,7 @@ uint32_t AGS02MA::readPPB()
 
 uint32_t AGS02MA::readUGM3()
 {
+  // TODO identical codewise to PPB, can be merged into one.
   uint32_t val = 0xFFFFFFFF;
   _lastRead = millis();
   if (_readRegister(AGS02MA_DATA))
@@ -202,7 +204,7 @@ bool AGS02MA::_readRegister(uint8_t reg)
 #endif
   _wire->beginTransmission(_address);
   _wire->write(reg);
-  _error = _wire->endTransmission();
+  _error = _wire->endTransmission(true);
 
   if (_wire->requestFrom(_address, (uint8_t)5) != 5)
   {
@@ -232,7 +234,7 @@ bool AGS02MA::_writeRegister(uint8_t reg)
   {
     _wire->write(_buffer[i]);
   }
-  _error = _wire->endTransmission();
+  _error = _wire->endTransmission(true);
   _wire->setClock(_I2CResetSpeed);
   return (_error == 0);
 }

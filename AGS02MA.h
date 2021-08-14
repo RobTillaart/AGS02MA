@@ -20,12 +20,13 @@
 #define AGS02MA_CRC_ERROR           -11
 
 
-#define AGS02MA_I2C_CLOCK           25000
+#define AGS02MA_I2C_CLOCK           30000
 
 
 class AGS02MA
 {
 public:
+  // address 26 = 0x1A
   explicit AGS02MA(const uint8_t deviceAddress = 26, TwoWire *wire = &Wire);
 
 #if defined (ESP8266) || defined(ESP32) 
@@ -58,10 +59,14 @@ public:
   int      lastError();
   uint8_t  lastStatus() { return _status; };
 
+  // TEMPORARY PUBLIC FOR DEBUGGING
+  uint8_t  _CRC8(uint8_t * buf, uint8_t size);
+  uint8_t  _buffer[5];
+
+
 private:
   bool     _readRegister(uint8_t reg);
   bool     _writeRegister(uint8_t reg);
-  uint8_t  _CRC8(uint8_t * buf, uint8_t size);
 
   uint32_t _I2CResetSpeed = 100000;
   uint32_t _startTime     = 0;
@@ -69,8 +74,6 @@ private:
   uint8_t  _address       = 0;
   uint8_t  _mode          = 255;
   uint8_t  _status        = 0;
-
-  uint8_t  _buffer[5];
 
   int      _error = AGS02MA_OK;
 
