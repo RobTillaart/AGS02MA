@@ -7,6 +7,7 @@
 //     URL: https://github.com/RobTillaart/AGS02MA
 //
 
+
 // default register is 0x00 at start of the sensor
 // datasheet states one can get the value with minimal interaction.
 // note this sketch does not use the library!
@@ -23,6 +24,7 @@ void setup()
   Serial.begin(115200);
 
   Wire.begin();
+
   Wire.setClock(30400);      // lowest speed an UNO supports that works with sensor.
 }
 
@@ -33,6 +35,7 @@ void loop()
   Wire.requestFrom(26, 5);
   for ( int i = 0; i < 5; i++)
   {
+
     buffer[i] = Wire.read();
     // Serial.print(buffer[i], HEX);  // for debugging.
     // Serial.print('\t');
@@ -47,7 +50,6 @@ void loop()
   Serial.println("CRC:\t");
   Serial.println(buffer[4]);
   Serial.println();
-
 }
 
 // -- END OF FILE --

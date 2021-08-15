@@ -12,7 +12,6 @@
 // one need to make the _CRC8() and _buffer[]
 // public in the AGS02MA.h file.
 
-
 #include "AGS02MA.h"
 
 
