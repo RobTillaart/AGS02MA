@@ -75,7 +75,6 @@ private:
   uint8_t  _address       = 0;
   uint8_t  _mode          = 255;
   uint8_t  _status        = 0;
-
   uint8_t  _buffer[5];
 
   uint8_t  _CRC8(uint8_t * buf, uint8_t size);

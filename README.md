@@ -20,8 +20,6 @@ First runs indicate 2 failed reads in > 500 Reads, so less than 1%
 The library sets the clock speed to 30 KHz (for non AVR) during operation and resets it to 100 KHz after operation.
 This is done to minimize interference with the communication of other devices. The reset clock speed can be changed with **setI2CResetSpeed()** e.g. to 200 or 400 KHz.
 
-The library sets the clock speed to 30 KHz (for non AVR) during operation and resets it to 100 KHz
-after operation. This is done to minimize interference with the communication with other devices. The reset clock speed can be changed with **setI2CResetSpeed()**.
 
 ## Interface
 

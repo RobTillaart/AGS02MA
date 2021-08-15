@@ -29,7 +29,6 @@ void setup()
   Serial.print("BEGIN:\t");
   Serial.println(b);
 
-
   // pre-heating improves measurement quality 
   // can be skipped
   Serial.println("\nWarming up (120 seconds = 24 dots)");
