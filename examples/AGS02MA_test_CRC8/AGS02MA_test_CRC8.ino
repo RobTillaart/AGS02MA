@@ -7,9 +7,11 @@
 //     URL: https://github.com/RobTillaart/AGS02MA
 //
 
-// NOTE: to have this example to work, 
+// NOTE: this is a low level test for the communication / CRC
+// to have this example to work, 
 // one need to make the _CRC8() and _buffer[]
 // public in the AGS02MA.h file.
+
 
 #include "AGS02MA.h"
 
@@ -23,11 +25,6 @@ void setup()
   Serial.println(__FILE__);
 
   Wire.begin();
-  Wire.setClock(30000);
-#if defined(__AVR__)
-  Serial.print("TWBR:\t");
-  Serial.println(TWBR);
-#endif
 
   Serial.print("AGS02MA_LIB_VERSION: ");
   Serial.println(AGS02MA_LIB_VERSION);
@@ -36,15 +33,6 @@ void setup()
   bool b = AGS.begin();
   Serial.print("BEGIN:\t");
   Serial.println(b);
-
-  Serial.println("\nWarming up (120 seconds = 24 dots)");
-  while (AGS.isHeated() == false)
-  {
-    delay(5000);
-    Serial.print(".");
-  }
-  Serial.println();
-
 
   uint8_t version = AGS.getSensorVersion();
   Serial.print("VERS:\t");

@@ -22,7 +22,7 @@ AGS02MA::AGS02MA(const uint8_t deviceAddress, TwoWire *wire)
 {
   _address       = deviceAddress;
   _wire          = wire;
-  
+
   _I2CResetSpeed = 100000;
   _startTime     = 0;
   _lastRead      = 0;
@@ -59,7 +59,7 @@ bool AGS02MA::begin()
 bool AGS02MA::isConnected()
 {
 #if defined (__AVR__)
-  TWBR = 255; 
+  TWBR = 255;
 #else
   _wire->setClock(AGS02MA_I2C_CLOCK);
 #endif
@@ -190,7 +190,6 @@ int AGS02MA::lastError()
 }
 
 
-
 /////////////////////////////////////////////////////////
 //
 // PRIVATE
@@ -198,7 +197,7 @@ int AGS02MA::lastError()
 bool AGS02MA::_readRegister(uint8_t reg)
 {
 #if defined (__AVR__)
-  TWBR = 255; 
+  TWBR = 255;
 #else
   _wire->setClock(AGS02MA_I2C_CLOCK);
 #endif
@@ -225,7 +224,7 @@ bool AGS02MA::_readRegister(uint8_t reg)
 bool AGS02MA::_writeRegister(uint8_t reg)
 {
 #if defined (__AVR__)
-  TWBR = 255; 
+  TWBR = 255;
 #else
   _wire->setClock(AGS02MA_I2C_CLOCK);
 #endif
