@@ -19,12 +19,6 @@ void setup()
   Serial.println(__FILE__);
 
   Wire.begin();
-  Wire.setClock(25000);
-  
-#if defined(__AVR__)
-  Serial.print("TWBR:\t");
-  Serial.println(TWBR);
-#endif
 
   Serial.print("AGS02MA_LIB_VERSION: ");
   Serial.println(AGS02MA_LIB_VERSION);
@@ -53,6 +47,7 @@ void setup()
   Serial.print(AGS.lastError(), HEX);
   Serial.println();
 
+  Serial.println("\ndone...");
 }
 
 
