@@ -1,4 +1,6 @@
 [![Arduino CI](https://github.com/RobTillaart/AGS02MA/workflows/Arduino%20CI/badge.svg)](https://github.com/marketplace/actions/arduino_ci)
+[![Arduino-lint](https://github.com/RobTillaart/AGS02MA/actions/workflows/arduino-lint.yml/badge.svg)](https://github.com/RobTillaart/AGS02MA/actions/workflows/arduino-lint.yml)
+[![JSON check](https://github.com/RobTillaart/AGS02MA/actions/workflows/jsoncheck.yml/badge.svg)](https://github.com/RobTillaart/AGS02MA/actions/workflows/jsoncheck.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/RobTillaart/AGS02MA/blob/master/LICENSE)
 [![GitHub release](https://img.shields.io/github/release/RobTillaart/AGS02MA.svg?maxAge=3600)](https://github.com/RobTillaart/AGS02MA/releases)
 
@@ -53,12 +55,13 @@ One must keep reads ~3 seconds apart according to the datasheet.
 - **uint8_t getSensorVersion()** reads sensor version from device.
 If the version cannot be read the function will return 255.
 
-The library sets the clock speed to 30 KHz (for non AVR) during operation and resets it to 100 KHz after operation.
+The library sets the clock speed to 30 KHz (for non AVR) during operation 
+and resets it to 100 KHz after operation.
 This is done to minimize interference with the communication of other devices.
 The following function can change the I2C reset speed to e.g. 200 or 400 KHz.
 
-- **setI2CResetSpeed(uint32_t s)** sets the I2C speed the library need to reset the I2C speed to.
-- **getI2CResetSpeed()** returns the set value above. Default is 100 KHz.
+- **void setI2CResetSpeed(uint32_t s)** sets the I2C speed the library need to reset the I2C speed to.
+- **uint32_t getI2CResetSpeed()** returns the value set. Default is 100 KHz.
 
 
 ### setMode
@@ -104,8 +107,7 @@ Some known gasses
 WARNING: The datasheet advises to take 3 seconds between reads.
 You might be able to squeeze time down to 1.5 second at your own risk.
 
-- **uint32_t readPPM()** returns PPM (parts per million). is a wrapper around readPPB().
-Returns **AGS02MA_ERROR_READ** if failed.
+- **float readPPM()** returns PPM (parts per million). is a wrapper around readPPB().
 Typical value should be between 1..999.
 - **uint32_t readPPB()** reads PPB (parts per billion) from device.
 Returns **AGS02MA_ERROR_READ** if failed.
@@ -117,7 +119,7 @@ Returns **AGS02MA_ERROR_READ** if failed.
 
 #### Cached values
 
-- **uint32_t lastPPM()** returns last readPPM (parts per million) value (cached). 
+- **float lastPPM()** returns last readPPM (parts per million) value (cached). 
 - **uint32_t lastPPB()** returns last read PPB (parts per billion) value (cached). Should be between 1..999999.
 - **uint32_t lastUGM3()** returns last read UGM3 (microgram per cubic meter) value (cached).
 
