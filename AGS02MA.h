@@ -65,7 +65,7 @@ public:
   uint32_t readUGM3();  // microgram per cubic meter
 
   // derived read functions
-  float    readPPM()    { return readPPB() v* 0.001; };         // parts per million
+  float    readPPM()    { return readPPB()  * 0.001; };         // parts per million
   float    readmGM3()   { return readUGM3() * 0.001; };         // milligram per cubic meter
   float    readUGF3()   { return readUGM3() * 0.0283168466; };  // microgram per cubic feet
 
