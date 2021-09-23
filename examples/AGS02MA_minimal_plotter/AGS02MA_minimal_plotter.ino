@@ -1,5 +1,5 @@
 //
-//    FILE: AGS02MA_minimal.ino
+//    FILE: AGS02MA_minimal_plotter.ino
 //  AUTHOR: Rob Tillaart
 // VERSION: 0.1.0
 // PURPOSE: test application

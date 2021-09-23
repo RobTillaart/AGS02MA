@@ -1,5 +1,5 @@
 //
-//    FILE: AGS02MA_PPM.ino
+//    FILE: AGS02MA_PPB_TIMING.ino
 //  AUTHOR: Rob Tillaart
 // VERSION: 0.1.0
 // PURPOSE: test application
@@ -11,7 +11,6 @@
 
 
 AGS02MA AGS(26);
-
 
 void setup()
 {
@@ -28,7 +27,7 @@ void setup()
   Serial.print("BEGIN:\t");
   Serial.println(b);
 
-  Serial.print("VERSION:\t");
+  Serial.print("VERS:\t");
   Serial.println(AGS.getSensorVersion());
 
   // pre-heating improves measurement quality
@@ -52,18 +51,20 @@ void setup()
 
 void loop()
 {
-  delay(3000);
-  Serial.print("PPM:\t");
-  Serial.print(AGS.readPPM(), 3);
+  delay(1500);
+  uint32_t start = millis();
+  uint32_t value = AGS.readPPB();
+  uint32_t stop = millis();
+
+  uint32_t duration = stop - start;
+  Serial.print(duration);
   Serial.print("\t");
-  Serial.print(AGS.dataReady(), HEX);
+  Serial.print(value);
   Serial.print("\t");
   Serial.print(AGS.lastStatus(), HEX);
   Serial.print("\t");
   Serial.print(AGS.lastError(), HEX);
   Serial.println();
-
 }
-
 
 // -- END OF FILE --

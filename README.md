@@ -107,14 +107,21 @@ Some known gasses
 WARNING: The datasheet advises to take 3 seconds between reads.
 You might be able to squeeze time down to 1.5 second at your own risk.
 
-- **float readPPM()** returns PPM (parts per million). is a wrapper around readPPB().
-Typical value should be between 1..999.
 - **uint32_t readPPB()** reads PPB (parts per billion) from device.
 Returns **AGS02MA_ERROR_READ** if failed.
 Typical value should be between 1..999999.
+Time needed is ~35 milliseconds.
 Check lastStatus() to get more info about success.
 - **uint32_t readUGM3()** reads UGM3 (microgram per cubic meter) current value from device. 
 Returns **AGS02MA_ERROR_READ** if failed.
+
+- **float readPPM()** returns PPM (parts per million). is a wrapper around readPPB().
+Typical value should be between 1..999. 
+- **float readmGM3()** returns milligram per cubic meter.
+- **float readHGF3()** returns milligram per cubic feet.
+
+
+readUGF3
 
 
 #### Cached values
@@ -140,7 +147,7 @@ Read datasheet or table below for details.
 |:----:|:-----------------------|
 | 7-4  | internal use           |
 | 3-1  | 000 = PPB  001 = uG/M3 |
-|  0   | RDY bit  0 = reading  1 = not ready |
+|  0   | RDY bit  0 = ready  1 = not ready |
 
 
 ## Future
@@ -153,8 +160,6 @@ Read datasheet or table below for details.
 
 - add **float readmGM3()** = milligram per cubic meter.   (uint32_t?)
 - check the mode bits of the status byte with internal \_mode.
-- optimize timing 30ms between low level I2C reads and writes.  
-timestamp needed?
 - elaborate error handling.
 - improve unit testing?
 - investigate max frequency of reads (now 3 seconds apart)

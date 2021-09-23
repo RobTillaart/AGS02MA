@@ -218,6 +218,8 @@ uint32_t AGS02MA::_readSensor()
   
 bool AGS02MA::_readRegister(uint8_t reg)
 {
+  while (millis() - _lastRegTime < 30) yield();
+
 #if defined (__AVR__)
   TWBR = 255;
 #else
@@ -233,11 +235,10 @@ bool AGS02MA::_readRegister(uint8_t reg)
     _wire->setClock(_I2CResetSpeed);
     return false;
   }
-  for (int i = 0; i < 5; i++)
+  for (uint8_t i = 0; i < 5; i++)
   {
     _buffer[i] = _wire->read();
   }
-  delay(30);
   _wire->setClock(_I2CResetSpeed);
   return true;
 }
@@ -245,6 +246,9 @@ bool AGS02MA::_readRegister(uint8_t reg)
 
 bool AGS02MA::_writeRegister(uint8_t reg)
 {
+  while (millis() - _lastRegTime < 30) yield();
+  _lastRegTime = millis();
+
 #if defined (__AVR__)
   TWBR = 255;
 #else
@@ -252,12 +256,11 @@ bool AGS02MA::_writeRegister(uint8_t reg)
 #endif
   _wire->beginTransmission(_address);
   _wire->write(reg);
-  for (int i = 0; i < 5; i++)
+  for (uint8_t i = 0; i < 5; i++)
   {
     _wire->write(_buffer[i]);
   }
   _error = _wire->endTransmission(true);
-  delay(30);
   _wire->setClock(_I2CResetSpeed);
   return (_error == 0);
 }

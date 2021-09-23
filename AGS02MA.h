@@ -54,19 +54,27 @@ public:
   bool     zeroCalibration();
 
 
-  // CORE
+  // MODE
   bool     setPPBMode();
   bool     setUGM3Mode();
   uint8_t  getMode()    { return _mode; };
 
-  float    readPPM()    { return readPPB() * 0.001; };  // parts per million 10^6
+
+  // READ functions
   uint32_t readPPB();   // parts per billion 10^9
   uint32_t readUGM3();  // microgram per cubic meter
+
+  // derived read functions
+  float    readPPM()    { return readPPB() v* 0.001; };         // parts per million
+  float    readmGM3()   { return readUGM3() * 0.001; };         // milligram per cubic meter
+  float    readUGF3()   { return readUGM3() * 0.0283168466; };  // microgram per cubic feet
 
   float    lastPPM()    { return _lastPPB * 0.001; };
   uint32_t lastPPB()    { return _lastPPB;  };    // fetch last PPB measurement
   uint32_t lastUGM3()   { return _lastUGM3; };    // fetch last UGM3 measurement
 
+
+  // STATUS
   uint32_t lastRead()   { return _lastRead; };    // timestamp last measurement
   int      lastError();
   uint8_t  lastStatus() { return _status; };
@@ -81,6 +89,7 @@ private:
   uint32_t _I2CResetSpeed = 100000;
   uint32_t _startTime     = 0;
   uint32_t _lastRead      = 0;
+  uint32_t _lastRegTime   = 0;
   uint32_t _lastPPB       = 0;
   uint32_t _lastUGM3      = 0;
   uint8_t  _address       = 0;
