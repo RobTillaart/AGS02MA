@@ -115,10 +115,10 @@ Check lastStatus() to get more info about success.
 - **uint32_t readUGM3()** reads UGM3 (microgram per cubic meter) current value from device. 
 Returns **AGS02MA_ERROR_READ** if failed.
 
-- **float readPPM()** returns PPM (parts per million). is a wrapper around readPPB().
+- **float readPPM()** returns parts per million (PPM). is a wrapper around readPPB().
 Typical value should be between 1..999. 
-- **float readmGM3()** returns milligram per cubic meter.
-- **float readHGF3()** returns milligram per cubic feet.
+- **float readMGM3()** returns milligram per cubic meter.
+- **float readUGF3()** returns microgram per cubic feet.
 
 
 readUGF3

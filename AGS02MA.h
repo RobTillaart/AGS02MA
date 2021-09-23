@@ -66,10 +66,10 @@ public:
 
   // derived read functions
   float    readPPM()    { return readPPB()  * 0.001; };         // parts per million
-  float    readmGM3()   { return readUGM3() * 0.001; };         // milligram per cubic meter
+  float    readMGM3()   { return readUGM3() * 0.001; };         // milligram per cubic meter
   float    readUGF3()   { return readUGM3() * 0.0283168466; };  // microgram per cubic feet
 
-  float    lastPPM()    { return _lastPPB * 0.001; };
+  float    lastPPM()    { return _lastPPB   * 0.001; };
   uint32_t lastPPB()    { return _lastPPB;  };    // fetch last PPB measurement
   uint32_t lastUGM3()   { return _lastUGM3; };    // fetch last UGM3 measurement
 
