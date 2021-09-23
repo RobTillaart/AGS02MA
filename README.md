@@ -18,7 +18,8 @@ Tests with ESP32 / ESP8266 at 30 KHz look good, tests with lower clock speeds ar
 First runs indicate 2 failed reads in > 500 Reads, so less than 1%
 
 The library sets the clock speed to 30 KHz (for non AVR) during operation and resets it to 100 KHz after operation.
-This is done to minimize interference with the communication of other devices. The reset clock speed can be changed with **setI2CResetSpeed()** e.g. to 200 or 400 KHz.
+This is done to minimize interference with the communication of other devices. 
+The reset clock speed can be changed with **setI2CResetSpeed()** e.g. to 200 or 400 KHz.
 
 
 ## Interface
@@ -30,6 +31,7 @@ This is done to minimize interference with the communication of other devices. T
 - **bool begin(uint8_t sda, uint8_t scl)** begin for ESP32 and ESP8266.
 - **bool begin()** initializer for Arduino UNO a.o.
 - **bool isConnected()** returns true if device address can be seen on I2C.
+- **void reset()** reset internal variables.
 
 
 ### Timing
@@ -70,22 +72,54 @@ The default mode at startup of the sensor is PPB = parts per billion.
 
 #### PPB versus UGM3
 
-There is no 1 to 1 relation between the PPB and the uG/m3 readings as this relation depends on the weight of the individual molecules.
+There is no 1 to 1 relation between the PPB and the uG/m3 readings as this relation depends 
+on the weight of the individual molecules.
 PPB is therefore an more an absolute indicator where uG/m3 is sort of relative indicator.
-If the gas is unknown, PPB is imho the preferred measurement.
+If the gas is unknown, PPB is in my opinion the preferred measurement.
+
+
+From an unverified source the following formula:
+M = molecular weight of the gas.
+
+**μg/m3 = (ppb)\*(12.187)\*(M) / (273.15 + °C)** 
+
+Simplified formula for 1 atm @ 25°C: 
+
+**μg/m3 = ppb \* M \* 0.04087539829 μg/m3**
+
+Some known gasses
+
+|  gas    |  ratio              | molecular weight M |
+|:--------|:--------------------|-------------------:|
+| SO2     | 1 ppb = 2.62 μg/m3  | 64 |
+| NO2     | 1 ppb = 1.88 μg/m3  | 46 |
+| NO      | 1 ppb = 1.25 μg/m3  | 30 |
+| O3      | 1 ppb = 2.00 μg/m3  | 48 |
+| CO      | 1 ppb = 1.145 μg/m3 | 28 |
+| Benzene | 1 ppb = 3.19 μg/m3  | 78 | C6H6 |
 
 
 ### Reading
 
-WARNING: Datasheet advises to take 3 seconds between reads.
+WARNING: The datasheet advises to take 3 seconds between reads.
 You might be able to squeeze time down to 1.5 second at your own risk.
 
-- **uint32_t readPPB()** reads PPB from device.
-Returns 0xFFFFFFFF if failed.
+- **uint32_t readPPM()** returns PPM (parts per million). is a wrapper around readPPB().
+Returns **AGS02MA_ERROR_READ** if failed.
+Typical value should be between 1..999.
+- **uint32_t readPPB()** reads PPB (parts per billion) from device.
+Returns **AGS02MA_ERROR_READ** if failed.
 Typical value should be between 1..999999.
 Check lastStatus() to get more info about success.
-- **uint32_t readUGM3()** reads current value from device. 
-Returns 0xFFFFFFFF if failed.
+- **uint32_t readUGM3()** reads UGM3 (microgram per cubic meter) current value from device. 
+Returns **AGS02MA_ERROR_READ** if failed.
+
+
+#### Cached values
+
+- **uint32_t lastPPM()** returns last readPPM (parts per million) value (cached). 
+- **uint32_t lastPPB()** returns last read PPB (parts per billion) value (cached). Should be between 1..999999.
+- **uint32_t lastUGM3()** returns last read UGM3 (microgram per cubic meter) value (cached).
 
 
 ### Other
@@ -94,31 +128,34 @@ Returns 0xFFFFFFFF if failed.
 See example sketch.
 - **int lastError()** returns last error.
 - **uint8_t lastStatus()** returns status byte from last read.
-Read datasheet for details. 
+Read datasheet or table below for details. 
+- **uint8_t dataReady()** returns RDY bit from last read.
+
+
+#### Status bits.
+
+| bit  | description            |
+|:----:|:-----------------------|
+| 7-4  | internal use           |
+| 3-1  | 000 = PPB  001 = uG/M3 |
+|  0   | RDY bit  0 = reading  1 = not ready |
 
 
 ## Future
 
 - test test test ...
-- buy a few sensors
-
-### Documentation
-
-- improve
-- add table for molecular weights
+- improve documentation
 - add indicative table for PPB health zone
 
 ### Code
 
-- add examples 
-- add **float readPPM()**
-- add **float readmGM3()**
-- add **bool RDYbit()** split the RDY bit of the status byte
+- add **float readmGM3()** = milligram per cubic meter.   (uint32_t?)
 - check the mode bits of the status byte with internal \_mode.
-- optimize code where possible
-- optimize timing 30ms between low level I2C reads and writes.
+- optimize timing 30ms between low level I2C reads and writes.  
+timestamp needed?
 - elaborate error handling.
 - improve unit testing?
 - investigate max frequency of reads (now 3 seconds apart)
+
 
 
