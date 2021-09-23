@@ -59,11 +59,11 @@ public:
   bool     setUGM3Mode();
   uint8_t  getMode()    { return _mode; };
 
-  float    readPPM();   { return readPPB() * 0.001; };  // parts per million 10^6
+  float    readPPM()    { return readPPB() * 0.001; };  // parts per million 10^6
   uint32_t readPPB();   // parts per billion 10^9
   uint32_t readUGM3();  // microgram per cubic meter
 
-  float    lastPPM()    { return (_lastPPB * 0.001; };
+  float    lastPPM()    { return _lastPPB * 0.001; };
   uint32_t lastPPB()    { return _lastPPB;  };    // fetch last PPB measurement
   uint32_t lastUGM3()   { return _lastUGM3; };    // fetch last UGM3 measurement
 
