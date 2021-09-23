@@ -39,7 +39,7 @@ unittest(test_base)
   AGS02MA AGS(26);
   Wire.begin();
   
-  fprintf(stderr, "AGS02MA_LIB_VERSION: %s", AGS02MA_LIB_VERSION);
+  fprintf(stderr, "AGS02MA_LIB_VERSION: %s\n", AGS02MA_LIB_VERSION);
 
   assertTrue(AGS.begin());
   assertTrue(AGS.isConnected());   // TODO - GODMODE
@@ -66,7 +66,7 @@ unittest(test_mode)
   AGS02MA AGS(26);
   Wire.begin();
   
-  fprintf(stderr, "AGS02MA_LIB_VERSION: %s", AGS02MA_LIB_VERSION);
+  fprintf(stderr, "AGS02MA_LIB_VERSION: %s\n", AGS02MA_LIB_VERSION);
 
   assertTrue(AGS.begin());
   assertTrue(AGS.isConnected());   // TODO - GODMODE
