@@ -155,7 +155,11 @@ uint32_t AGS02MA::readPPB()
   if (_error == AGS02MA_OK)
   {
     _lastRead = millis();
-    _lastUGM3 = val;
+    _lastPPB = val;
+  }
+  else
+  {
+    val = _lastPPB;
   }
   return val;
 }
@@ -168,6 +172,10 @@ uint32_t AGS02MA::readUGM3()
   {
     _lastRead = millis();
     _lastUGM3 = val;
+  }
+  else
+  {
+    val = _lastUGM3;
   }
   return val;
 }
