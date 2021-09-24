@@ -52,8 +52,9 @@ One must keep reads ~3 seconds apart according to the datasheet.
 
 - **bool setAddress(const uint8_t deviceAddress)** sets a new addres for the sensor. If function succeeds the address changes immediately and will be persistent over a reboot.
 - **uint8_t getAddress()** returns the set address. Default the function will return 26 or 0x1A.
-- **uint8_t getSensorVersion()** reads sensor version from device.
-If the version cannot be read the function will return 255.
+- **uint8_t getSensorVersion()** reads sensor version from device.  
+If the version cannot be read the function will return 255.  
+(My test sensors all return 117)
 
 The library sets the clock speed to 30 KHz (for non AVR) during operation 
 and resets it to 100 KHz after operation.

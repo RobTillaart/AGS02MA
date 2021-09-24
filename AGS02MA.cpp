@@ -101,12 +101,14 @@ uint8_t AGS02MA::getSensorVersion()
       // Serial.print('\t');
     // }
     // Serial.println();
-    // unclear what the other bytes have for information. 
-    // buffer [0] == ? year ?
-    // buffer [1] == ? month ?
-    // buffer [2] == ? day ?
-    // buffer [3] == VERSION
-    // buffer [4] == CRC
+    // unclear what the other bytes have for information.
+    // datasheet names these 3 bytes as KEEP.
+    // BUFFER        VALUE  MEANING
+    // buffer [0] == 20     year ?
+    // buffer [1] == 07     month ?
+    // buffer [2] == 28     day ?
+    // buffer [3] == 117    VERSION
+    // buffer [4] ==        CRC
     version = _buffer[3];
     if (_CRC8(_buffer, 5) != 0)
     {
@@ -222,8 +224,8 @@ uint32_t AGS02MA::_readSensor()
   }
   return val;
 }
-  
-  
+ 
+
 bool AGS02MA::_readRegister(uint8_t reg)
 {
   while (millis() - _lastRegTime < 30) yield();
