@@ -21,6 +21,8 @@
 
 #include <ArduinoUnitTests.h>
 
+#define ARDUINO_CI_UNITTEST
+
 #include "Arduino.h"
 #include "AGS02MA.h"
 

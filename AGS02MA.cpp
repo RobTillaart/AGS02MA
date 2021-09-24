@@ -226,8 +226,9 @@ uint32_t AGS02MA::_readSensor()
   
 bool AGS02MA::_readRegister(uint8_t reg)
 {
-  delay(30);
-  // while (millis() - _lastRegTime < 30) yield();
+#ifndef ARDUINO_CI_UNITTEST
+  while (millis() - _lastRegTime < 30) yield();
+#endif
 
 #if defined (__AVR__)
   TWBR = 255;
@@ -255,9 +256,10 @@ bool AGS02MA::_readRegister(uint8_t reg)
 
 bool AGS02MA::_writeRegister(uint8_t reg)
 {
-  delay(30);
-  // while (millis() - _lastRegTime < 30) yield();
-  // _lastRegTime = millis();
+#ifndef ARDUINO_CI_UNITTEST
+  while (millis() - _lastRegTime < 30) yield();
+  _lastRegTime = millis();
+#endif
 
 #if defined (__AVR__)
   TWBR = 255;
