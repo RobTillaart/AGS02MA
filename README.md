@@ -98,7 +98,7 @@ Simplified formula for 1 atm @ 25°C:
 Some known gasses
 
 |  gas    |  ratio              | molecular weight M |
-|:--------|:--------------------|-------------------:|
+|:--------|:--------------------|:------------------:|
 | SO2     | 1 ppb = 2.62 μg/m3  | 64 |
 | NO2     | 1 ppb = 1.88 μg/m3  | 46 |
 | NO      | 1 ppb = 1.25 μg/m3  | 30 |
