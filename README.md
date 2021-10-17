@@ -4,6 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/RobTillaart/AGS02MA/blob/master/LICENSE)
 [![GitHub release](https://img.shields.io/github/release/RobTillaart/AGS02MA.svg?maxAge=3600)](https://github.com/RobTillaart/AGS02MA/releases)
 
+
 # AGS02MA
 
 Arduino library for AGS02MA TVOC sensor.
