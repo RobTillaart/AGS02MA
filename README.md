@@ -123,7 +123,7 @@ Typical values depend on the molecular weight of the TVOC.
 Returns **lastUGM3()** if failed so one does not get sudden jumps in graphs.
 - **float readPPM()** returns parts per million (PPM). 
 This function is a wrapper around readPPB().
-Typical value should be between 1.00 .. 999.99 
+Typical value should be between 0.01 .. 999.99 
 - **float readMGM3()** returns milligram per cubic meter.
 - **float readUGF3()** returns microgram per cubic feet.
 
