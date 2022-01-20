@@ -20,7 +20,7 @@
   },
   "version": "0.1.4",
   "license": "MIT",
-  "frameworks": "arduino"
+  "frameworks": "arduino",
   "platforms": "*",
   "headers": "AGS02MA.h"
 }
