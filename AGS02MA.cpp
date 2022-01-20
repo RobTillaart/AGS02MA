@@ -2,7 +2,7 @@
 //    FILE: AGS02MA.cpp
 //  AUTHOR: Rob Tillaart, Viktor Balint
 //    DATE: 2021-08-12
-// VERSION: 0.1.3
+// VERSION: 0.1.4
 // PURPOSE: Arduino library for AGS02MA TVOC
 //     URL: https://github.com/RobTillaart/AGS02MA
 
@@ -116,6 +116,28 @@ uint8_t AGS02MA::getSensorVersion()
     }
   }
   return version;
+}
+
+
+uint32_t AGS02MA::getSensorDate()
+{
+  uint32_t date = 0xFFFFFFFF;
+  if (_readRegister(AGS02MA_VERSION))
+  {
+    date = _bin2bcd(buffer[2]);
+    date <<= 8;
+    date += _bin2bcd(buffer[1]);
+    date <<= 8;
+    date += 0x20;
+    date <<= 8;
+    date += _bin2bcd(buffer[0]);
+    // version = _buffer[3];
+    if (_CRC8(_buffer, 5) != 0)
+    {
+      _error = AGS02MA_ERROR_CRC;
+    }
+  }
+  return date;
 }
 
 
@@ -289,6 +311,12 @@ uint8_t AGS02MA::_CRC8(uint8_t * buf, uint8_t size)
     }
   }
   return crc;
+}
+
+
+uint8_t AGS02MA::_bin2bcd (uint8_t value)
+{
+  return value + 6 * (value / 10);
 }
 
 
