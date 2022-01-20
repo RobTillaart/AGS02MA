@@ -124,13 +124,13 @@ uint32_t AGS02MA::getSensorDate()
   uint32_t date = 0xFFFFFFFF;
   if (_readRegister(AGS02MA_VERSION))
   {
-    date = _bin2bcd(_buffer[2]);
+    date = 0x20;
+    date <<= 8;
+    date += _bin2bcd(_buffer[0]);
     date <<= 8;
     date += _bin2bcd(_buffer[1]);
     date <<= 8;
-    date += 0x20;
-    date <<= 8;
-    date += _bin2bcd(_buffer[0]);
+    date += _bin2bcd(_buffer[2]);
     // version = _buffer[3];
     if (_CRC8(_buffer, 5) != 0)
     {
