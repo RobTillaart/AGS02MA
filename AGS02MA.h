@@ -19,6 +19,7 @@
 #define AGS02MA_ERROR               -10
 #define AGS02MA_ERROR_CRC           -11
 #define AGS02MA_ERROR_READ          -12
+#define AGS02MA_ERROR_NOT_READY     -13
 
 
 #define AGS02MA_I2C_CLOCK           30000
