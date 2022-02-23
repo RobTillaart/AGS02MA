@@ -28,6 +28,19 @@ This is done to minimize interference with the communication of other devices.
 The reset clock speed can be changed with **setI2CResetSpeed()** e.g. to 200 or 400 KHz.
 
 
+## Version problem?
+
+The library can request the version with **getSensorVersion()**.
+My devices all report version 117 and this version is used to develop / test this library.
+There are devices reported with version 118 which only support the **PPB** and not the **ugM3** mode.
+It is unclear if this is an incident, bug or a structural change in the firmware.
+
+So if you encounter problems with setting the mode, let me know.
+Also if you have a working device, not being version 117 or 118 let me know too.
+
+See also - https://github.com/RobTillaart/AGS02MA/issues/11
+
+
 ## Interface
 
 
