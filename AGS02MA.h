@@ -3,7 +3,7 @@
 //    FILE: AGS02MA.h
 //  AUTHOR: Rob Tillaart, Viktor Balint
 //    DATE: 2021-08-12
-// VERSION: 0.1.4
+// VERSION: 0.1.5
 // PURPOSE: Arduino library for AGS02MA TVOC
 //     URL: https://github.com/RobTillaart/AGS02MA
 //
@@ -13,7 +13,7 @@
 #include "Wire.h"
 
 
-#define AGS02MA_LIB_VERSION         (F("0.1.4"))
+#define AGS02MA_LIB_VERSION         (F("0.1.5"))
 
 #define AGS02MA_OK                  0
 #define AGS02MA_ERROR               -10

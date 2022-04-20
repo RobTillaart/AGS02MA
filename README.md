@@ -28,17 +28,43 @@ This is done to minimize interference with the communication of other devices.
 The reset clock speed can be changed with **setI2CResetSpeed()** e.g. to 200 or 400 KHz.
 
 
-## Version problem?
+## Version 118 problems
 
 The library can request the version with **getSensorVersion()**.
 My devices all report version 117 and this version is used to develop / test this library.
-There are devices reported with version 118 which only support the **PPB** and not the **ugM3** mode.
+There are devices reported with version 118 which behave differently.
+
+
+### ugM3 not supported
+
+See  - https://github.com/RobTillaart/AGS02MA/issues/11
+
+The version 118 seems only to support the **PPB** and not the **ugM3** mode.
 It is unclear if this is an incident, bug or a structural change in the firmware.
 
-So if you encounter problems with setting the mode, let me know.
-Also if you have a working device, not being version 117 or 118 let me know too.
+If you encounter similar problems with setting the mode (any version), please let me know.
+That will help indicating if this is a "structural change" or incident.
 
-See also - https://github.com/RobTillaart/AGS02MA/issues/11
+
+### Calibrate problem?
+
+See - https://github.com/RobTillaart/AGS02MA/issues/11
+
+In this issue a problem is reported with a version 118 sensor. 
+The problem exposed itself after running the calibration sketch (command) and after a fall. 
+It cannot be determined if the calibration or the fall or something else caused the malfunction. 
+As it is a single occurrence that cannot be reproduced (having no 118 sensor myself) 
+Additional calibration runs did not fix the problem.
+
+**Advice**: be aware of the risk of calibrating a version 118.
+
+Any experiences with calibration (any version) are welcome to investigate the root cause here.
+
+
+### Please report your experiences.
+
+If you have a AGS20MA device, version 117 or 118 or other, please let me know your experiences 
+with the sensor and this (or other) library.
 
 
 ## Interface
