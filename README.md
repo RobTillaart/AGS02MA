@@ -13,6 +13,9 @@ Arduino library for AGS02MA TVOC sensor.
 This library is experimental, so please use with care.
 Note the warning about the I2C speed, the device works at only 30 KHz.
 
+**WARNING: zero calibration corrupts sensors other than version 117.**
+see below.
+
 
 ## I2C - warning low speed
 
@@ -46,24 +49,27 @@ If you encounter similar problems with setting the mode (any version), please le
 That will help indicating if this is a "structural change" or incident.
 
 
-### Calibrate problem?
+### Calibrate problem!
 
-See - https://github.com/RobTillaart/AGS02MA/issues/11
+See - https://github.com/RobTillaart/AGS02MA/issues/13
 
 In this issue a problem is reported with a version 118 sensor. 
-The problem exposed itself after running the calibration sketch (command) and after a fall. 
-It cannot be determined if the calibration or the fall or something else caused the malfunction. 
-As it is a single occurrence that cannot be reproduced (having no 118 sensor myself) 
+The problem exposed itself after running the calibration sketch (command).
+The problem has been confirmed by a 2nd version 118 sensor.
 Additional calibration runs did not fix the problem.
+Version 117 seem to have no problems with calibration.
 
-**Advice**: be aware of the risk of calibrating a version 118.
+**Advice**: do **NOT** calibrate a version 118.
 
-Any experiences with calibration (any version) are welcome to investigate the root cause here.
+Note: the version 0.2.0 determines the version in the calibration function so
+it won't calibrate any non 117 version. 
+
 
 
 ### Please report your experiences.
 
-If you have a AGS20MA device, version 117 or 118 or other, please let me know your experiences 
+If you have a AGS20MA device, version 117 or 118 or other, 
+please let me know your experiences 
 with the sensor and this (or other) library.
 
 
@@ -195,7 +201,7 @@ Typical value should be between 0.01 .. 999.99
 ### Other
 
 - **bool zeroCalibration()** to be called after at least 5 minutes in fresh air.
-See example sketch.
+See example sketch. **DO NOT USE THIS FOR ANY VERSION OTHER THAN 117**
 - **int lastError()** returns last error.
 - **uint8_t lastStatus()** returns status byte from last read.
 Read datasheet or table below for details. A new read is needed to update this.

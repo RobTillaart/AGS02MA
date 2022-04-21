@@ -3,7 +3,7 @@
 //    FILE: AGS02MA.h
 //  AUTHOR: Rob Tillaart, Viktor Balint
 //    DATE: 2021-08-12
-// VERSION: 0.1.5
+// VERSION: 0.2.0
 // PURPOSE: Arduino library for AGS02MA TVOC
 //     URL: https://github.com/RobTillaart/AGS02MA
 //
@@ -13,13 +13,14 @@
 #include "Wire.h"
 
 
-#define AGS02MA_LIB_VERSION         (F("0.1.5"))
+#define AGS02MA_LIB_VERSION         (F("0.2.0"))
 
 #define AGS02MA_OK                  0
 #define AGS02MA_ERROR               -10
 #define AGS02MA_ERROR_CRC           -11
 #define AGS02MA_ERROR_READ          -12
 #define AGS02MA_ERROR_NOT_READY     -13
+#define AGS02MA_ERROR_VERSION       -14
 
 
 #define AGS02MA_I2C_CLOCK           30000
@@ -41,14 +42,14 @@ public:
   bool     isHeated() { return (millis() - _startTime) > 120000UL; };
 
 
-  // CONFIGURATION
+  //  CONFIGURATION
   bool     setAddress(const uint8_t deviceAddress);
   uint8_t  getAddress() { return _address; };
   uint8_t  getSensorVersion();
   uint32_t getSensorDate();
 
-  // to set the speed the I2C bus should return to
-  // as the device operates at very low bus speed of 30 kHz.
+  //  to set the speed the I2C bus should return to
+  //  as the device operates at very low bus speed of 30 kHz.
   void     setI2CResetSpeed(uint32_t speed) { _I2CResetSpeed = speed; };
   uint32_t getI2CResetSpeed() { return _I2CResetSpeed; };
 
@@ -56,17 +57,17 @@ public:
   bool     zeroCalibration();
 
 
-  // MODE
+  //  MODE
   bool     setPPBMode();
   bool     setUGM3Mode();
   uint8_t  getMode()    { return _mode; };
 
 
-  // READ functions
+  //  READ functions
   uint32_t readPPB();   // parts per billion 10^9
   uint32_t readUGM3();  // microgram per cubic meter
 
-  // derived read functions
+  //  derived read functions
   float    readPPM()    { return readPPB()  * 0.001; };         // parts per million
   float    readMGM3()   { return readUGM3() * 0.001; };         // milligram per cubic meter
   float    readUGF3()   { return readUGM3() * 0.0283168466; };  // microgram per cubic feet
@@ -76,17 +77,22 @@ public:
   uint32_t lastUGM3()   { return _lastUGM3; };    // fetch last UGM3 measurement
 
 
-  // STATUS
+  //  STATUS
   uint32_t lastRead()   { return _lastRead; };    // timestamp last measurement
   int      lastError();
   uint8_t  lastStatus() { return _status; };
   uint8_t  dataReady()  { return _status & 0x01; };
 
+  //  SHOULD BE PRIVATE
+  bool     _writeRegister(uint8_t reg);
+  bool     _readRegister(uint8_t reg);
+  uint8_t  _buffer[5];
+
 
 private:
   uint32_t _readSensor();
-  bool     _readRegister(uint8_t reg);
-  bool     _writeRegister(uint8_t reg);
+
+
 
   uint32_t _I2CResetSpeed = 100000;
   uint32_t _startTime     = 0;
@@ -97,7 +103,6 @@ private:
   uint8_t  _address       = 0;
   uint8_t  _mode          = 255;
   uint8_t  _status        = 0;
-  uint8_t  _buffer[5];
 
   uint8_t  _CRC8(uint8_t * buf, uint8_t size);
   uint8_t  _bin2bcd(uint8_t val);

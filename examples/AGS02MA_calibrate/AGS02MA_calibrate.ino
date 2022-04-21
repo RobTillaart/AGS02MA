@@ -1,12 +1,10 @@
 //
 //    FILE: AGS02MA_calibrate.ino
 //  AUTHOR: Rob Tillaart
-// VERSION: 0.1.0
 // PURPOSE: test application
-//    DATE: 2021-08-12
 //     URL: https://github.com/RobTillaart/AGS02MA
 
-// WARNING: Sensor version 118 might have a problem with the calibration command. 
+// WARNING: Sensor version 118 has a problem with the calibration command. 
 //          Please read issue #13 to understand possible consequences. 
 
 
@@ -38,11 +36,13 @@ void setup()
   Serial.print("SENSOR VERSION: ");
   Serial.println(sensorVersion);
 
-  Serial.println("Note: version 118 of the sensor might have a calibration problem.");
-  Serial.println("Please read issue #13 to understand possible consequences.");
-  Serial.println("(unplug the sensor now to stop calibration)");
-  Serial.println();
-  delay(10000);
+  if (sensorVersion != 117)
+  {
+    Serial.println("Note: version 118 of the sensor might have a calibration problem.");
+    Serial.println("Please read issue #13 to understand possible consequences.");
+    Serial.println("(unplug the sensor now to stop calibration)");
+    Serial.println();
+  }
 
   Serial.println("Place the device outside in open air for 6 minutes");
   Serial.println("Take a drink and relax ;)");
