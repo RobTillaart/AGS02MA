@@ -301,6 +301,15 @@ bool AGS02MA::_writeRegister(uint8_t reg)
   return (_error == 0);
 }
 
+uint16_t AGS02MA::_dataMSB(uint8_t * buf)
+{
+  return (buf[0] << 8) + buf[1];
+}
+
+uint16_t AGS02MA::_dataLSB(uint8_t * buf)
+{
+  return (buf[2] << 8) + buf[3];
+}
 
 uint8_t AGS02MA::_CRC8(uint8_t * buf, uint8_t size)
 {

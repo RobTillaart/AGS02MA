@@ -99,6 +99,8 @@ private:
   uint8_t  _status        = 0;
   uint8_t  _buffer[5];
 
+  uint16_t _dataMSB(uint8_t * buf);
+  uint16_t _dataLSB(uint8_t * buf);
   uint8_t  _CRC8(uint8_t * buf, uint8_t size);
   uint8_t  _bin2bcd(uint8_t val);
 
