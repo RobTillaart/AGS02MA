@@ -49,6 +49,17 @@ void setup()
   Serial.print("VERSION:\t");
   version = AGS.getSensorVersion();
   Serial.println(version);
+  int err = AGS.lastError();
+
+  // Reading version correctly matters, as we display additional comments based on it.
+  if(err != AGS02MA_OK)
+  {
+    Serial.print("Error reading version:\t");
+    Serial.println(err);
+    Serial.println("Won't attempt to calibrate. Reset when connection with the sensor is stable.");
+    Serial.println();
+    return;
+  }
 
   if (version != 118)
   {
@@ -64,9 +75,13 @@ void setup()
     Serial.print("\t");
     Serial.println(m);
 
+    while (!AGS.getZeroCalibrationData(initialValue))
+    {
+      onError(AGS.lastError());
+    }
+
     Serial.println();
     Serial.println("Your initial zero calibration is:");
-    initialValue = AGS.getZeroCalibrationData();
     printZeroCalibrationData(initialValue);
     Serial.println();
 
@@ -82,7 +97,13 @@ void setup()
     b = AGS.manualZeroCalibration(ZC_VALUE);
     Serial.print("CALIB:\t");
     Serial.println(b);
-    auto newValue = AGS.getZeroCalibrationData();
+
+    AGS02MA::ZeroCalibrationData newValue;
+    while (!AGS.getZeroCalibrationData(newValue))
+    {
+      onError(AGS.lastError());
+    }
+
     printZeroCalibrationData(newValue);
     Serial.println();
 
@@ -100,7 +121,13 @@ void setup()
     b = AGS.manualZeroCalibration(initialValue.value);
     Serial.print("CALIB:\t");
     Serial.println(b);
-    auto restoredValue = AGS.getZeroCalibrationData();
+
+    AGS02MA::ZeroCalibrationData restoredValue;
+    while (!AGS.getZeroCalibrationData(restoredValue))
+    {
+      onError(AGS.lastError());
+    }
+
     printZeroCalibrationData(restoredValue);
     Serial.println();
 
@@ -108,11 +135,21 @@ void setup()
 
 }
 
+
 void loop()
 {
   delay(INTERVAL);
   printPPB();
 }
+
+
+void onError(int err) {
+  Serial.print("Error:\t");
+  Serial.print(err);
+  Serial.println("\tretrying...");
+  delay(INTERVAL);
+}
+
 
 void printZeroCalibrationData(AGS02MA::ZeroCalibrationData &zc) {
   Serial.print("Status:\t");
@@ -120,6 +157,7 @@ void printZeroCalibrationData(AGS02MA::ZeroCalibrationData &zc) {
   Serial.print("Value:\t");
   Serial.println(zc.value);
 }
+
 
 void printPPB()
 {

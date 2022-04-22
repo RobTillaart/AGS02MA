@@ -173,6 +173,8 @@ See example sketch.
 - **bool manualZeroCalibration(uint16_t value)** for v118 sensors, set the zero calibration value manually.
 0 = automatic calibration, 1-65535 manual calibration.
 - **ZeroCalibration getZeroCalibration()** returns a data struct with the current zero calibration status and value.
+- **bool getZeroCalibrationData(ZeroCalibrationData &data);** fills a data struct with the current zero calibration status and value.
+Returns true on success.
 - **int lastError()** returns last error.
 - **uint8_t lastStatus()** returns status byte from last read.
 Read datasheet or table below for details. A new read is needed to update this.

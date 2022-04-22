@@ -67,8 +67,8 @@ public:
    * For v117: 0-65535 = automatic calibration.
    * For v118: 0 = automatic calibration, 1-65535 manual calibration.
    */
-  bool                manualZeroCalibration(uint16_t value = 0);
-  ZeroCalibrationData getZeroCalibrationData();
+  bool     manualZeroCalibration(uint16_t value = 0);
+  bool     getZeroCalibrationData(ZeroCalibrationData &data);
 
 
   // MODE

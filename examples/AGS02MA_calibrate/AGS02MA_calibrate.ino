@@ -47,6 +47,17 @@ void setup()
   Serial.print("VERSION:\t");
   version = AGS.getSensorVersion();
   Serial.println(version);
+  int err = AGS.lastError();
+
+  // Reading version correctly matters, as we display additional comments based on it.
+  if(err != AGS02MA_OK)
+  {
+    Serial.print("Error reading version:\t");
+    Serial.println(err);
+    Serial.println("Won't attempt to calibrate. Reset when connection with the sensor is stable.");
+    Serial.println();
+    return;
+  }
 
   b = AGS.setPPBMode();
   uint8_t m = AGS.getMode();
@@ -73,13 +84,20 @@ void setup()
   }
 
   Serial.println();
-  Serial.println("About to perform calibration now. Your previous calibration data was:");
+  Serial.println("About to perform calibration now.");
 
-  auto initialValue = AGS.getZeroCalibrationData();
-  Serial.print("Status:\t");
-  Serial.println(initialValue.status);
-  Serial.print("Value:\t");
-  Serial.println(initialValue.value);
+  AGS02MA::ZeroCalibrationData initialValue;
+  if (!AGS.getZeroCalibrationData(initialValue))
+  {
+    Serial.print("Error reading zero calibration data:\t");
+    Serial.println(AGS.lastError());
+    Serial.println("Won't attempt to calibrate. Reset when connection with the sensor is stable.");
+    Serial.println();
+    return;
+  }
+
+  Serial.println("Your previous calibration data was:");
+  printZeroCalibrationData(initialValue);
 
   delay(1000);
 
@@ -89,13 +107,19 @@ void setup()
   Serial.print("CALIB:\t");
   Serial.println(b);
   Serial.println();
+  Serial.println("Calibration done.");
 
-  Serial.println("Calibration done, your new calibration data is:");
-  auto zc = AGS.getZeroCalibrationData();
-  Serial.print("Status:\t");
-  Serial.println(zc.status);
-  Serial.print("Value:\t");
-  Serial.println(zc.value);
+  AGS02MA::ZeroCalibrationData zc;
+  while (!AGS.getZeroCalibrationData(zc))
+  {
+    Serial.print("Error:\t");
+    Serial.print(AGS.lastError());
+    Serial.println("\tretrying...");
+    delay(READ_INTERVAL);
+  }
+
+  Serial.println("Your new calibration data is:");
+  printZeroCalibrationData(zc);
 
   Serial.println();
   Serial.println("Showing what PPB values look like post calibration.");
@@ -115,6 +139,14 @@ void loop()
   Serial.print("[POST]\t");
   printPPB();
   delay(READ_INTERVAL);
+}
+
+
+void printZeroCalibrationData(AGS02MA::ZeroCalibrationData &zc) {
+  Serial.print("Status:\t");
+  Serial.println(zc.status);
+  Serial.print("Value:\t");
+  Serial.println(zc.value);
 }
 
 

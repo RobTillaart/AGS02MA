@@ -216,19 +216,23 @@ bool AGS02MA::manualZeroCalibration(uint16_t value)
 }
 
 
-AGS02MA::ZeroCalibrationData AGS02MA::getZeroCalibrationData() {
-  AGS02MA::ZeroCalibrationData zc;
-  if (_readRegister(AGS02MA_CALIBRATION))
+bool AGS02MA::getZeroCalibrationData(AGS02MA::ZeroCalibrationData &data) {
+  if (!_readRegister(AGS02MA_CALIBRATION))
   {
-    _error = AGS02MA_OK;
-    zc.status = _getDataMSB();
-    zc.value = _getDataLSB();
-    if (_CRC8(_buffer, 5) != 0)
-    {
-      _error = AGS02MA_ERROR_CRC;
-    }
+    return false;
   }
-  return zc;
+
+  if (_CRC8(_buffer, 5) != 0)
+  {
+    _error = AGS02MA_ERROR_CRC;
+    return false;
+  }
+
+  _error = AGS02MA_OK;
+  // Don't pollute the struct given to us, until we've handled all error cases.
+  data.status = _getDataMSB();
+  data.value = _getDataLSB();
+  return true;
 }
 
 
