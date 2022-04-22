@@ -223,24 +223,27 @@ int AGS02MA::lastError()
   return e;
 }
 
-
-int AGS02MA::readRegister(uint8_t address, AGS02MA::Register &reg) {
-  if (_readRegister(address))
+bool AGS02MA::readRegister(uint8_t address, AGS02MA::RegisterData &reg) {
+  if (!_readRegister(address))
   {
-    _error = AGS02MA_OK;
-    reg.data[0] = _buffer[0];
-    reg.data[1] = _buffer[1];
-    reg.data[2] = _buffer[2];
-    reg.data[3] = _buffer[3];
-    reg.crc = _buffer[4];
-    if (_CRC8(_buffer, 5) != 0)
-    {
-      _error = AGS02MA_ERROR_CRC;
-    }
+    return false;
   }
-  return _error;
-}
 
+  if (_CRC8(_buffer, 5) != 0)
+  {
+    _error = AGS02MA_ERROR_CRC;
+    return false;
+  }
+
+  _error = AGS02MA_OK;
+  // Don't pollute the struct given to us, until we've handled all error cases.
+  reg.data[0] = _buffer[0];
+  reg.data[1] = _buffer[1];
+  reg.data[2] = _buffer[2];
+  reg.data[3] = _buffer[3];
+  reg.crc = _buffer[4];
+  return true;
+}
 
 /////////////////////////////////////////////////////////
 //

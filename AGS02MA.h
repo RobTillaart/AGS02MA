@@ -28,7 +28,7 @@
 class AGS02MA
 {
 public:
-  struct Register
+  struct RegisterData
   {
     uint8_t data[4];
     uint8_t crc;
@@ -88,8 +88,8 @@ public:
   uint8_t  lastStatus() { return _status; };
   uint8_t  dataReady()  { return _status & 0x01; };
 
-  // Register dumping
-  int      readRegister(uint8_t address, Register &reg);
+  // Reading registers
+  bool     readRegister(uint8_t address, RegisterData &reg);
 
 
 private:

@@ -14,7 +14,7 @@
 const uint8_t addresses[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 0x11, 0x20, 0x21};
 
 
-AGS02MA::Register reg;
+AGS02MA::RegisterData reg;
 AGS02MA AGS(26);
 
 
@@ -44,20 +44,19 @@ void loop()
   delay(3000);
   for (auto address : addresses)
   {
-    int status = AGS.readRegister(address, reg);
-
+    bool b = AGS.readRegister(address, reg);
     Serial.print("REG[0x");
     Serial.print(address, HEX);
     Serial.print("]");
 
-    if(status == AGS02MA_OK)
+    if(b)
     {
       printRegister(address, reg);
     }
     else
     {
       Serial.print("\tError:\t");
-      Serial.println(status);
+      Serial.println(AGS.lastError());
     }
     delay(50);
   }
@@ -65,7 +64,7 @@ void loop()
 }
 
 
-void printRegister(uint8_t address, AGS02MA::Register &reg) {
+void printRegister(uint8_t address, AGS02MA::RegisterData &reg) {
   // Raw bytes first for any register.
   for (auto b : reg.data)
   {
