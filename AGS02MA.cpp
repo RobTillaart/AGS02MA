@@ -224,6 +224,24 @@ int AGS02MA::lastError()
 }
 
 
+int AGS02MA::readRegister(uint8_t address, AGS02MA::Register &reg) {
+  if (_readRegister(address))
+  {
+    _error = AGS02MA_OK;
+    reg.data[0] = _buffer[0];
+    reg.data[1] = _buffer[1];
+    reg.data[2] = _buffer[2];
+    reg.data[3] = _buffer[3];
+    reg.crc = _buffer[4];
+    if (_CRC8(_buffer, 5) != 0)
+    {
+      _error = AGS02MA_ERROR_CRC;
+    }
+  }
+  return _error;
+}
+
+
 /////////////////////////////////////////////////////////
 //
 // PRIVATE

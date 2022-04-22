@@ -13,7 +13,7 @@
 #include "Wire.h"
 
 
-#define AGS02MA_LIB_VERSION         (F("0.1.4"))
+#define AGS02MA_LIB_VERSION         (F("0.3.0-pre"))
 
 #define AGS02MA_OK                  0
 #define AGS02MA_ERROR               -10
@@ -28,6 +28,12 @@
 class AGS02MA
 {
 public:
+  struct Register
+  {
+    uint8_t data[4];
+    uint8_t crc;
+  };
+
   // address 26 = 0x1A
   explicit AGS02MA(const uint8_t deviceAddress = 26, TwoWire *wire = &Wire);
 
@@ -81,6 +87,9 @@ public:
   int      lastError();
   uint8_t  lastStatus() { return _status; };
   uint8_t  dataReady()  { return _status & 0x01; };
+
+  // Register dumping
+  int      readRegister(uint8_t address, Register &reg);
 
 
 private:
