@@ -170,6 +170,9 @@ Typical value should be between 0.01 .. 999.99
 
 - **bool zeroCalibration()** to be called after at least 5 minutes in fresh air.
 See example sketch.
+- **bool manualZeroCalibration(uint16_t value)** for v118 sensors, set the zero calibration value manually.
+0 = automatic calibration, 1-65535 manual calibration.
+- **ZeroCalibration getZeroCalibration()** returns a data struct with the current zero calibration status and value.
 - **int lastError()** returns last error.
 - **uint8_t lastStatus()** returns status byte from last read.
 Read datasheet or table below for details. A new read is needed to update this.
