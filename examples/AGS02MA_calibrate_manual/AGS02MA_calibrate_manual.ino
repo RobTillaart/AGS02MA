@@ -87,6 +87,8 @@ void setup()
     Serial.println();
 
     Serial.println("Showing sample data.");
+    Serial.println("NOTICE: v118 sensors are known to give different results after powering off!");
+    Serial.println("You may need to manually set your calibration value every time power was lost.");
     for (size_t i = 0; i < READS; i++)
     {
       delay(INTERVAL);
