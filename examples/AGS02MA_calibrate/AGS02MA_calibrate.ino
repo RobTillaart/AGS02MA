@@ -75,11 +75,11 @@ void setup()
   Serial.println();
   Serial.println("About to perform calibration now. Your previous calibration data was:");
 
-  auto zc = AGS.getZeroCalibration();
+  auto initialValue = AGS.getZeroCalibration();
   Serial.print("Status:\t");
-  Serial.println(zc.status);
+  Serial.println(initialValue.status);
   Serial.print("Value:\t");
-  Serial.println(zc.value);
+  Serial.println(initialValue.value);
 
   delay(1000);
 
@@ -91,7 +91,7 @@ void setup()
   Serial.println();
 
   Serial.println("Calibration done, your new calibration data is:");
-  zc = AGS.getZeroCalibration();
+  auto zc = AGS.getZeroCalibration();
   Serial.print("Status:\t");
   Serial.println(zc.status);
   Serial.print("Value:\t");
@@ -99,7 +99,9 @@ void setup()
 
   Serial.println();
   Serial.println("Showing what PPB values look like post calibration.");
-  if (version == 118 || zc.status == 125)
+  // A 125 status is typically shown on v118's after they've been powered off.
+  // Either having this version at all, or seeing this status, we'll display a notice.
+  if (version == 118 || initialValue.status == 125)
   {
     Serial.println("NOTICE: v118 sensors are known to give different results after powering off!");
     Serial.println("You may need to manually set your calibration value every time power was lost.");
