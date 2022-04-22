@@ -30,6 +30,13 @@ class AGS02MA
 public:
   struct ZeroCalibrationData
   {
+    /**
+     * Warning, the exact meaning of this status is not fully documented.
+     * It seems like it's a bitmask:
+     * 0000 1100 | 0x0C | 12  | Typical value
+     * 0000 1101 | 0x0D | 13  | Sometimes seen on v117
+     * 0111 1101 | 0x7D | 125 | Seen on v118, after power-off (gives different data than 12!)
+     */
     uint16_t status;
     uint16_t value;
   };
