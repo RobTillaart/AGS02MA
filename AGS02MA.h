@@ -58,7 +58,7 @@ public:
   uint32_t getI2CResetSpeed() { return _I2CResetSpeed; };
 
   // to be called after at least 5 minutes in fresh air.
-  bool     zeroCalibration();
+  bool     zeroCalibration() { return manualZeroCalibration(0); };
 
   /**
    * Set the zero calibration value manually.

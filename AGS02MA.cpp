@@ -205,11 +205,6 @@ uint32_t AGS02MA::readUGM3()
 }
 
 
-bool AGS02MA::zeroCalibration()
-{
-  return manualZeroCalibration(0);
-}
-
 
 bool AGS02MA::manualZeroCalibration(uint16_t value)
 {
