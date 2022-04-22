@@ -18,8 +18,8 @@
 
 AGS02MA AGS(26);
 
-AGS02MA::ZeroCalibration initialValue;
-u_int8_t version;
+AGS02MA::ZeroCalibrationData initialValue;
+uint8_t version;
 
 
 void setup()
@@ -66,8 +66,8 @@ void setup()
 
     Serial.println();
     Serial.println("Your initial zero calibration is:");
-    initialValue = AGS.getZeroCalibration();
-    printZeroCalibration(initialValue);
+    initialValue = AGS.getZeroCalibrationData();
+    printZeroCalibrationData(initialValue);
     Serial.println();
 
     Serial.println("Showing sample data before changing.");
@@ -82,8 +82,8 @@ void setup()
     b = AGS.manualZeroCalibration(ZC_VALUE);
     Serial.print("CALIB:\t");
     Serial.println(b);
-    auto newValue = AGS.getZeroCalibration();
-    printZeroCalibration(newValue);
+    auto newValue = AGS.getZeroCalibrationData();
+    printZeroCalibrationData(newValue);
     Serial.println();
 
     Serial.println("Showing sample data.");
@@ -100,8 +100,8 @@ void setup()
     b = AGS.manualZeroCalibration(initialValue.value);
     Serial.print("CALIB:\t");
     Serial.println(b);
-    auto restoredValue = AGS.getZeroCalibration();
-    printZeroCalibration(restoredValue);
+    auto restoredValue = AGS.getZeroCalibrationData();
+    printZeroCalibrationData(restoredValue);
     Serial.println();
 
   }
@@ -114,7 +114,7 @@ void loop()
   printPPB();
 }
 
-void printZeroCalibration(AGS02MA::ZeroCalibration &zc) {
+void printZeroCalibrationData(AGS02MA::ZeroCalibrationData &zc) {
   Serial.print("Status:\t");
   Serial.println(zc.status);
   Serial.print("Value:\t");

@@ -28,7 +28,8 @@
 class AGS02MA
 {
 public:
-  struct ZeroCalibration {
+  struct ZeroCalibrationData
+  {
     uint16_t status;
     uint16_t value;
   };
@@ -66,8 +67,8 @@ public:
    * For v117: 0-65535 = automatic calibration.
    * For v118: 0 = automatic calibration, 1-65535 manual calibration.
    */
-  bool            manualZeroCalibration(uint16_t value = 0);
-  ZeroCalibration getZeroCalibration();
+  bool                manualZeroCalibration(uint16_t value = 0);
+  ZeroCalibrationData getZeroCalibrationData();
 
 
   // MODE
@@ -113,8 +114,8 @@ private:
   uint8_t  _status        = 0;
   uint8_t  _buffer[5];
 
-  uint16_t _dataMSB(uint8_t * buf);
-  uint16_t _dataLSB(uint8_t * buf);
+  uint16_t _getDataMSB();
+  uint16_t _getDataLSB();
   uint8_t  _CRC8(uint8_t * buf, uint8_t size);
   uint8_t  _bin2bcd(uint8_t val);
 

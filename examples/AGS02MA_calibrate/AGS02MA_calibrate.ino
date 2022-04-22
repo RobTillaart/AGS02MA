@@ -75,7 +75,7 @@ void setup()
   Serial.println();
   Serial.println("About to perform calibration now. Your previous calibration data was:");
 
-  auto initialValue = AGS.getZeroCalibration();
+  auto initialValue = AGS.getZeroCalibrationData();
   Serial.print("Status:\t");
   Serial.println(initialValue.status);
   Serial.print("Value:\t");
@@ -91,7 +91,7 @@ void setup()
   Serial.println();
 
   Serial.println("Calibration done, your new calibration data is:");
-  auto zc = AGS.getZeroCalibration();
+  auto zc = AGS.getZeroCalibrationData();
   Serial.print("Status:\t");
   Serial.println(zc.status);
   Serial.print("Value:\t");

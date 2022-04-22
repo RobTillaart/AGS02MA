@@ -205,25 +205,24 @@ uint32_t AGS02MA::readUGM3()
 }
 
 
-
 bool AGS02MA::manualZeroCalibration(uint16_t value)
 {
   _buffer[0] = 0x00;
   _buffer[1] = 0x0C;
   _buffer[2] = (uint8_t) (value >> 8);
-  _buffer[3] = (uint8_t) value;
+  _buffer[3] = (uint8_t) (value & 0x00FF);
   _buffer[4] = _CRC8(_buffer, 4);
   return _writeRegister(AGS02MA_CALIBRATION);
 }
 
 
-AGS02MA::ZeroCalibration AGS02MA::getZeroCalibration() {
-  AGS02MA::ZeroCalibration zc;
+AGS02MA::ZeroCalibrationData AGS02MA::getZeroCalibrationData() {
+  AGS02MA::ZeroCalibrationData zc;
   if (_readRegister(AGS02MA_CALIBRATION))
   {
     _error = AGS02MA_OK;
-    zc.status = _dataMSB(_buffer);
-    zc.value = _dataLSB(_buffer);
+    zc.status = _getDataMSB();
+    zc.value = _getDataLSB();
     if (_CRC8(_buffer, 5) != 0)
     {
       _error = AGS02MA_ERROR_CRC;
@@ -318,14 +317,14 @@ bool AGS02MA::_writeRegister(uint8_t reg)
   return (_error == 0);
 }
 
-uint16_t AGS02MA::_dataMSB(uint8_t * buf)
+uint16_t AGS02MA::_getDataMSB()
 {
-  return (buf[0] << 8) + buf[1];
+  return (_buffer[0] << 8) + _buffer[1];
 }
 
-uint16_t AGS02MA::_dataLSB(uint8_t * buf)
+uint16_t AGS02MA::_getDataLSB()
 {
-  return (buf[2] << 8) + buf[3];
+  return (_buffer[2] << 8) + _buffer[3];
 }
 
 uint8_t AGS02MA::_CRC8(uint8_t * buf, uint8_t size)
