@@ -15,7 +15,7 @@
 
 
 uint32_t start, stop;
-u_int8_t version;
+uint8_t version;
 
 AGS02MA AGS(26);
 
