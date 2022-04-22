@@ -207,11 +207,17 @@ uint32_t AGS02MA::readUGM3()
 
 bool AGS02MA::zeroCalibration()
 {
+  return manualZeroCalibration(0);
+}
+
+
+bool AGS02MA::manualZeroCalibration(uint16_t value)
+{
   _buffer[0] = 0x00;
   _buffer[1] = 0x0C;
-  _buffer[2] = 0xFF;
-  _buffer[3] = 0xF3;
-  _buffer[4] = 0xFC;
+  _buffer[2] = (uint8_t) (value >> 8);
+  _buffer[3] = (uint8_t) value;
+  _buffer[4] = _CRC8(_buffer, 4);
   return _writeRegister(AGS02MA_CALIBRATION);
 }
 

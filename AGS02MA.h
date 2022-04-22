@@ -55,6 +55,14 @@ public:
   // to be called after at least 5 minutes in fresh air.
   bool     zeroCalibration();
 
+  /**
+   * Set the zero calibration value manually.
+   * To be called after at least 5 minutes in fresh air.
+   * For v117: 0-65535 = automatic calibration.
+   * For v118: 0 = automatic calibration, 1-65535 manual calibration.
+   */
+  bool            manualZeroCalibration(uint16_t value = 0);
+
 
   // MODE
   bool     setPPBMode();
