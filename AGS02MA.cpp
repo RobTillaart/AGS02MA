@@ -222,6 +222,22 @@ bool AGS02MA::manualZeroCalibration(uint16_t value)
 }
 
 
+AGS02MA::ZeroCalibration AGS02MA::getZeroCalibration() {
+  AGS02MA::ZeroCalibration zc;
+  if (_readRegister(AGS02MA_CALIBRATION))
+  {
+    _error = AGS02MA_OK;
+    zc.status = _dataMSB(_buffer);
+    zc.value = _dataLSB(_buffer);
+    if (_CRC8(_buffer, 5) != 0)
+    {
+      _error = AGS02MA_ERROR_CRC;
+    }
+  }
+  return zc;
+}
+
+
 int AGS02MA::lastError()
 {
   int e = _error;

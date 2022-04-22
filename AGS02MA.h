@@ -28,6 +28,11 @@
 class AGS02MA
 {
 public:
+  struct ZeroCalibration {
+    uint16_t status;
+    uint16_t value;
+  };
+
   // address 26 = 0x1A
   explicit AGS02MA(const uint8_t deviceAddress = 26, TwoWire *wire = &Wire);
 
@@ -62,6 +67,7 @@ public:
    * For v118: 0 = automatic calibration, 1-65535 manual calibration.
    */
   bool            manualZeroCalibration(uint16_t value = 0);
+  ZeroCalibration getZeroCalibration();
 
 
   // MODE
