@@ -123,9 +123,4 @@ void printRegister(uint8_t address, AGS02MA::RegisterData &reg) {
 }
 
 
-void printSpecific(uint8_t address, AGS02MA::Register &reg) {
-  
-}
-
-
 // -- END OF FILE --
