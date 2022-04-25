@@ -11,6 +11,9 @@
       "name": "Rob Tillaart",
       "email": "Rob.Tillaart@gmail.com",
       "maintainer": true
+    },
+    {
+      "name": "Beanow"
     }
   ],
   "repository":
