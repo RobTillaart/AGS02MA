@@ -13,9 +13,6 @@ Arduino library for AGS02MA TVOC sensor.
 This library is experimental, so please use with care.
 Note the warning about the I2C speed, the device works at only 30 KHz.
 
-**WARNING: zero calibration corrupts sensors other than version 117.**
-see below.
-
 
 ## I2C - warning low speed
 

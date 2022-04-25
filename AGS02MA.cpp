@@ -6,8 +6,6 @@
 // PURPOSE: Arduino library for AGS02MA TVOC
 //     URL: https://github.com/RobTillaart/AGS02MA
 
-//  0.2.0   2022-04-21  prevent calibration for versions other than 117
-//                      see issue #13
 
 #include "AGS02MA.h"
 
@@ -209,13 +207,6 @@ uint32_t AGS02MA::readUGM3()
 
 bool AGS02MA::manualZeroCalibration(uint16_t value)
 {
-  uint8_t version = getSensorVersion();
-  if (version != 117)
-  {
-    _error = AGS02MA_ERROR_VERSION;
-    return false;
-  }
-
   _buffer[0] = 0x00;
   _buffer[1] = 0x0C;
   _buffer[2] = (uint8_t) (value >> 8);
