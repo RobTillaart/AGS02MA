@@ -1,7 +1,7 @@
 //
 //    FILE: AGS02MA_readRegister.ino
 //  AUTHOR: Rob Tillaart, Beanow
-// VERSION: 0.3.0-pre
+// VERSION: 0.3.0
 // PURPOSE: test application
 //    DATE: 2022-04-22
 //     URL: https://github.com/RobTillaart/AGS02MA
