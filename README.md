@@ -170,6 +170,12 @@ Typical value should be between 0.01 .. 999.99
 
 - **bool zeroCalibration()** to be called after at least 5 minutes in fresh air.
 See example sketch.
+- **bool manualZeroCalibration(uint16_t value = 0)** Set the zero calibration value manually.
+To be called after at least 5 minutes in fresh air.
+For v117: 0-65535 = automatic calibration.
+For v118: 0 = automatic calibration, 1-65535 manual calibration.
+- **bool getZeroCalibrationData(ZeroCalibrationData &data);** fills a data struct with the current zero calibration status and value.
+Returns true on success.
 - **int lastError()** returns last error.
 - **uint8_t lastStatus()** returns status byte from last read.
 Read datasheet or table below for details. A new read is needed to update this.
