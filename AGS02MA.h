@@ -32,6 +32,7 @@ public:
   {
     uint8_t data[4];
     uint8_t crc;
+    bool    crcValid;
   };
 
   struct ZeroCalibrationData

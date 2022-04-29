@@ -72,9 +72,9 @@ void printRegister(uint8_t address, AGS02MA::RegisterData &reg) {
     Serial.print(b);
   }
 
-  Serial.print("\tC: ");
+  Serial.print("\tCRC: ");
+  Serial.print(reg.crcValid ? "OK  " : "ERR ");
   Serial.print(reg.crc);
-  Serial.print("\t");
 
   // Specific interpretations
   switch (address)

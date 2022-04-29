@@ -249,12 +249,6 @@ bool AGS02MA::readRegister(uint8_t address, AGS02MA::RegisterData &reg) {
     return false;
   }
 
-  if (_CRC8(_buffer, 5) != 0)
-  {
-    _error = AGS02MA_ERROR_CRC;
-    return false;
-  }
-
   _error = AGS02MA_OK;
   // Don't pollute the struct given to us, until we've handled all error cases.
   reg.data[0] = _buffer[0];
@@ -262,6 +256,7 @@ bool AGS02MA::readRegister(uint8_t address, AGS02MA::RegisterData &reg) {
   reg.data[2] = _buffer[2];
   reg.data[3] = _buffer[3];
   reg.crc = _buffer[4];
+  reg.crcValid = _CRC8(_buffer, 5) == 0;
   return true;
 }
 
