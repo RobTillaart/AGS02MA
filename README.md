@@ -178,7 +178,8 @@ For v118: 0 = automatic calibration, 1-65535 manual calibration.
 Returns true on success.
 - **bool readRegister(uint8_t address, RegisterData &reg)** fills a data struct with the chip's register data at that address.
 Primarily intended for troubleshooting and analysis of the sensor. Not recommended to build applications on top of this method's raw data.
-Returns true on success.
+Returns true when the struct is filled, false when the data could not be read.
+Note: unlike other public methods, CRC errors don't return false or show up in `lastError()`, instead the CRC result is stored in `RegisterData.crcValid`.
 - **int lastError()** returns last error.
 - **uint8_t lastStatus()** returns status byte from last read.
 Read datasheet or table below for details. A new read is needed to update this.
