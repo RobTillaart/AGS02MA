@@ -14,7 +14,19 @@ This library is experimental, so please use with care.
 Note the warning about the I2C speed, the device works at only 30 KHz.
 
 
-## I2C - warning low speed
+## I2C
+
+### PIN layout from left to right
+
+| Front L->R | Description |
+|:----------:|:------------|
+| pin 1      | VDD +       |
+| pin 2      | SDA data    |
+| pin 3      | GND         |
+| pin 4      | SCL clock   |
+
+
+### WARNING - LOW SPEED
 
 The sensor uses I2C at very low speed <= 30 KHz.
 For an Arduino UNO the lowest speed possible is about 30.4KHz (TWBR = 255) which works.
