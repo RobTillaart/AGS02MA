@@ -27,6 +27,12 @@ and resets it to 100 KHz after operation.
 This is done to minimize interference with the communication of other devices. 
 The reset clock speed can be changed with **setI2CResetSpeed()** e.g. to 200 or 400 KHz.
 
+#### 0.3.1 fix.
+
+Version 0.3.1 sets the I2C prescaler TWSR register of the Arduino UNO to 4 so the lowest 
+speed possible is about 8 KHz. A speed of 25 KHz has 0% error .
+After communication the clock (+ prescaler is reset again).
+
 
 ## Version 118 problems
 
