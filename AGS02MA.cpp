@@ -308,7 +308,10 @@ bool AGS02MA::_readRegister(uint8_t reg)
   _wire->beginTransmission(_address);
   _wire->write(reg);
   _error = _wire->endTransmission(true);
+
+  //  TODO investigate async interface
   delay(30);
+
   if (_wire->requestFrom(_address, (uint8_t)5) != 5)
   {
     _error = AGS02MA_ERROR_READ;

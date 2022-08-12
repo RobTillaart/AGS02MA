@@ -22,7 +22,7 @@
 #define AGS02MA_ERROR_NOT_READY     -13
 
 
-#define AGS02MA_I2C_CLOCK           30000
+#define AGS02MA_I2C_CLOCK           25000    //  max 30000
 
 
 class AGS02MA
