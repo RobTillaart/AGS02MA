@@ -162,7 +162,7 @@ If the gas is unknown, PPB is in my opinion the preferred measurement.
 From an unverified source the following formula:
 M = molecular weight of the gas.
 
-**μg/m3 = (ppb)\*(12.187)\*(M) / (273.15 + °C)**
+**μg/m3 = ppb \* M \* 12.187 / (273.15 + °C)**
 
 Simplified formula for 1 atm @ 25°C:
 
