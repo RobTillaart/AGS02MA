@@ -150,6 +150,19 @@ The default mode at startup of the sensor is PPB = parts per billion.
 - **bool setUGM3Mode()** sets device in micro gram per cubic meter mode. Returns true on success.
 - **uint8_t getMode()** returns mode set. 0 = PPB, 1 = UGm3, 255 = not set.
 
+#### Air quality classification
+
+| ppm     | Class               |
+|---------|---------------------|
+| <= 220  | Good                |
+| <= 660  | Moderate            |
+| <= 1430 | Bad                 |
+| <= 2200 | Unhealthy           |
+| <= 3300 | Very unhealthy      |
+| <= 5500 | Extremely unhealthy |
+| > 5500  | Hazardous           |
+
+[Source](https://learn.kaiterra.com/en/resources/understanding-tvoc-volatile-organic-compounds)
 
 #### PPB versus UGM3
 
