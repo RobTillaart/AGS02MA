@@ -6,6 +6,7 @@
 //
 // PURPOSE: this is a debugging tool for developing / investigating.
 //          Do not use it unless you are willing to crash your sensor.
+//
 //  usage:  make _readRegister(), _writeRegister() and _buffer public
 //
 //          USE AT OWN RISK

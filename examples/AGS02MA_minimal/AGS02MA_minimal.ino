@@ -24,8 +24,8 @@ void setup()
 
   Serial.begin(115200);
   Serial.println(__FILE__);
-  Serial.print("AGS02MA_LIB_VERSION: ");
-  Serial.println(AGS02MA_LIB_VERSION);
+  //  Serial.print("AGS02MA_LIB_VERSION: ");
+  //  Serial.println(AGS02MA_LIB_VERSION);
   Serial.println();
 
   Wire.begin();
