@@ -48,12 +48,16 @@ before calling **begin()**.
 - https://github.com/RobTillaart/AGS3870 CH4 sensor
 - https://github.com/RobTillaart/AGS3871 CO sensor
 - https://www.renesas.com/us/en/document/whp/overview-tvoc-and-indoor-air-quality
-- https://github.com/RobTillaart/map2colour
 - https://github.com/RobTillaart/SGP30 (experimental)
+- https://github.com/RobTillaart/AtomicWeight  (determine Mass from chemical formula)
+- https://github.com/RobTillaart/map2colour
+
 
 ## I2C
 
-### PIN layout from left to right
+### Pin layout from left to right
+
+Always check datasheet!
 
 |  Front L->R  |  Description  |
 |:------------:|:--------------|
@@ -78,16 +82,18 @@ See section below.
 ### WARNING - LOW SPEED
 
 The sensor uses I2C at very low speed <= 30 KHz.
-For an Arduino UNO the lowest speed supported is about 30.4KHz (TWBR = 255) which works.
+For an Arduino UNO the lowest speed supported is about 30.4KHz (TWBR = 255) which works
+in my testruns so far.
 First runs with Arduino UNO indicate 2 failed reads in > 500 Reads, so less than 1%
+failure rate.
 
 Tests with ESP32 / ESP8266 at 30 KHz look good,
 tests with ESP32 at lower clock speeds are to be done but expected to work.
 
 The library sets the clock speed to 30 KHz (for non AVR) during operation
-and resets it default to 100 KHz after operation.
+and resets the I2C clock speed default to 100 KHz after operation.
 This is done to minimize interference with the communication of other devices.
-The reset clock speed can be changed with **setI2CResetSpeed(speed)** e.g. to 200 or 400 KHz.
+The "reset clock speed" can be changed with **setI2CResetSpeed(speed)** e.g. to 200 or 400 KHz.
 
 
 ### 0.3.1 fix.
@@ -96,7 +102,7 @@ Version 0.3.1 sets the **I2C prescaler TWSR** register of the Arduino UNO to 4 s
 speed possible is reduced to about 8 KHz.
 A test run 4 hours with 6000++ reads on an UNO at 25 KHz gave 0 errors.
 So the communication speed will be set to 25 KHz, also for other boards, for stability.
-After communication the clock (+ prescaler) is reset again as before.
+After communication the I2C clock (+ prescaler) is reset again as before.
 
 
 ### I2C multiplexing
@@ -228,23 +234,23 @@ The default mode at startup of the sensor is PPB = parts per billion.
 
 ### Air quality classification
 
-Indicative
+Indicative description and colour representation.
 
-| TVOC(ppb) |  Scale  |  Description          |  Colour      |
-|:---------:|:-------:|:---------------------:|:-------------|
+| TVOC(ppb) |  Scale  |  Description          |  Colour      |  Notes  |
+|:---------:|:-------:|:---------------------:|:-------------|:--------|
 |  <= 220   |    1    |  Good                 |  Green       |
 |  <= 660   |    3    |  Moderate             |  Yellow      |
 |  <= 1430  |    7    |  Bad                  |  Orange      |
 |  <= 2200  |   10    |  Unhealthy            |  Red         |
-|  <= 3300  |   15    |  Very unhealthy       |  Purple      |
-|  <= 5500  |   25    |  Hazardous            |  Deep Purple |
-|  > 5500   |   50    |  Extremely Hazardous  |  Deep Purple |
+|  <= 3300  |   15    |  Very unhealthy       |  Purple      |  add pulsating effect
+|  <= 5500  |   25    |  Hazardous            |  Deep Purple |  add pulsating effect
+|  > 5500   |   50    |  Extremely Hazardous  |  Deep Purple |  add pulsating effect
 
 [Source](https://learn.kaiterra.com/en/resources/understanding-tvoc-volatile-organic-compounds)
 
-- Scale is a relative scale where 220 ~~ 1
+- Scale is a relative (linear) scale where 220 ~~ 1
 - Colour is an indicative colour mapping.
-  - https://github.com/RobTillaart/map2colour for continuous scale.
+  - https://github.com/RobTillaart/map2colour for continuous colour scale mapping.
 
 
 ### PPB versus UGM3
@@ -276,7 +282,7 @@ Some known gasses
 |  C6H6  |  Benzene            |  1 ppb = 3.19 μg/m3   |    78 gr/mol         |
 
 
-- https://github.com/RobTillaart/AtomicWeight  (determine M from chemical formula)
+- https://github.com/RobTillaart/AtomicWeight  (determine Mass from chemical formula)
 
 
 ### Read the sensor
@@ -285,14 +291,17 @@ WARNING: The datasheet advises to take 3 seconds between reads.
 Tests gave stable results at 1.5 second intervals.
 Use this faster rate at your own risk.
 
-- **uint32_t readPPB()** reads PPB (parts per billion) from device.
+- **uint32_t readPPB()** reads the PPB (parts per billion) from the device.
 Typical value should be between 1 .. 999999.
 Returns **lastPPB()** value if failed so one does not get sudden jumps in graphs.
-Check **lastStatus()** and **lastError()** to get more info about success.
-Time needed is ~35 milliseconds.
+Check **lastStatus()** and **lastError()** to get more info about the success of the read().
+Time needed is ~35 milliseconds (which might cause problems).
 - **uint32_t readUGM3()** reads UGM3 (microgram per cubic meter) current value from device.
 Typical values depend on the molecular weight of the TVOC.
 Returns **lastUGM3()** if failed so one does not get sudden jumps in graphs.
+
+Wrappers
+
 - **float readPPM()** returns parts per million (PPM).
 This function is a wrapper around readPPB().
 Typical value should be between 0.01 .. 999.99
